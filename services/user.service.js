@@ -15,7 +15,6 @@ service.getById = getById;
 service.create = create;
 service.update = update;
 service.delete = _delete;
-
 module.exports = service;
 
 function authenticate(email, password) {
@@ -57,16 +56,16 @@ function getById(_id) {
 function create(userParam) {
     var deferred = Q.defer();
 
-    // validation
+    // email validation
     usersDb.findOne(
-        { email: userParam.email },
+        { email: userParam.email},
         function (err, user) {
             if (err) deferred.reject(err);
-
             if (user) {
                 // email already exists
-                deferred.reject('Email "' + userParam.email + '" is invalid');
-            } else {
+                deferred.reject('Email "'  + userParam.email + ' " is already registered');} 
+
+            else {
                 createUser();
             }
         });
@@ -74,17 +73,23 @@ function create(userParam) {
     function createUser() {
         // set user object to userParam without the cleartext password
         var user = _.omit(userParam, 'password');
-
-        // add hashed password to user object
+        
+        if(userParam.firstName == "" || userParam.lastName == "" ){
+             deferred.reject("");
+        }
+        
+        else{
+             // add hashed password to user object
         user.hash = bcrypt.hashSync(userParam.password, 10);
-
         usersDb.insert(
             user,
             function (err, doc) {
                 if (err) deferred.reject(err);
 
                 deferred.resolve();
-            });
+            }); 
+        }
+      
     }
 
     return deferred.promise;
