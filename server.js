@@ -21,9 +21,6 @@ app.use('/register', require('./controllers/register.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
 
-//route for rest api that is consumed by mobile
-app.use('/rest' require('./controller/rest.controller'));
-
 // make '/app' default route
 app.get('/', function (req, res) {
     return res.redirect('/app');
