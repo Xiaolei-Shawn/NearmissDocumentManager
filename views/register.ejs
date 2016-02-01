@@ -18,9 +18,18 @@
             <input type="text" name="email" id="email" class="form-control" value="<%= locals.email || '' %>" required />
         </div>
         <div class="form-group">
+            <label for="phoneNumber">Phone-number</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control" value="<%= locals.phoneNumber|| '' %>" required />
+        </div>
+        <div class="form-group">
             <label for="password">Password</label>
             <input type="password" name="password" id="password" class="form-control" required />
         </div>
+         <div class="form-group">
+            <label for="passwordCofirmation">Repeat-password</label>
+            <input type="password" name="passwordCofirmation" id="passwordCofirmation" class="form-control" required />
+        </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Register</button>
             <a href="/login" class="btn btn-link">Cancel</a>

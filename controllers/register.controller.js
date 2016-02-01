@@ -14,8 +14,7 @@ router.post('/', function (req, res) {
         url: config.apiUrl + '/users/register',
         form: req.body,
         json: true,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName
+
     }, function (error, response, body) {
   
         if (error) {
@@ -28,7 +27,9 @@ router.post('/', function (req, res) {
         if (req.body.lastName == "") {
             return res.render('register', { error: 'Please entry a last name!'});
         }
-
+        if (req.body.phoneNumber == "") {
+            return res.render('register', { error: 'Please entry a phone number!'});
+        }
         if (response.statusCode !== 200) {
             return res.render('register', {
                 error: response.body,

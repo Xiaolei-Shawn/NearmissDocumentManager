@@ -74,7 +74,7 @@ function create(userParam) {
         // set user object to userParam without the cleartext password
         var user = _.omit(userParam, 'password');
         
-        if(userParam.firstName == "" || userParam.lastName == "" ){
+        if(userParam.firstName == "" || userParam.lastName == "" || userParam.phoneNumber == "" ){
              deferred.reject("");
         }
         
@@ -127,6 +127,7 @@ function update(_id, userParam) {
             firstName: userParam.firstName,
             lastName: userParam.lastName,
             email: userParam.email,
+            phoneNumber: userParam.phoneNumber
         };
 
         // update password if it was entered
