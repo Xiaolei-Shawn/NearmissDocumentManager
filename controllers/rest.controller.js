@@ -1,18 +1,15 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/templates/:id', function(req, res, next){
-	var template = null;
-	var id = req.params.id;
+var templates = require('./services/templates.service');
+var auth = require('./services/auth.service');
 
-	//Get specific template by given id from db
+router.post('/muser', auth.login);
 
-	template !== null ? res.json(template) : res.json({"STATUS": "404 NOT FOUND"})
-});
+router.get('/template/:id', templates.getOne});
 
-router.post('/template' function(req, res, next){
-	var template = req.body();
+router.post('/template/', templates.create);
 
-	//Push the new template to db
-	res.json({"STATUS": "200 OK"});
-});
+router.put('/template/:id', templates.update);
+
+router.delete('/template/:id', template.delete);
