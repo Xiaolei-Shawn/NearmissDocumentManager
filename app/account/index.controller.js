@@ -9,8 +9,9 @@
         var vm = this;
 
         vm.user = null;
-        vm.saveUser = saveUser;
+        vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
+        vm.createUser = createUser;
 
         initController();
 
@@ -21,7 +22,7 @@
             });
         }
 
-        function saveUser() {
+        function updateUser() {
             UserService.Update(vm.user)
                 .then(function () {
                     FlashService.Success('User updated');
@@ -40,6 +41,16 @@
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
+        }
+
+        function createUser(){
+            UserService.create(vm.user)
+                .then(function () {
+                    FlashService.Success('User created')
+                })
+                .catch(function (error) {
+                   FlashService.Error(error);  
+               });
         }
     }
 
