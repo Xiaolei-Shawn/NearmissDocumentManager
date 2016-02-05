@@ -25,6 +25,10 @@ router.post('/', function (req, res) {
             return res.render('login', { error: 'An error occurred' });
         }
 
+        if(req.body.email == ""){
+            return res.render('login', { error: 'Please entry your email!'});
+        }
+
         if (!body.token) {
             return res.render('login', { error: 'Email or password is incorrect', email: req.body.email });
         }
