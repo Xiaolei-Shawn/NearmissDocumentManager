@@ -1,5 +1,6 @@
 var jwt = require('jwt-simple');
- 
+var config = require('config.json');
+
 var auth = {
  
   login: function(req, res) {
@@ -66,7 +67,7 @@ function genToken(user) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
     exp: expires
-  }, require('../config/secret')());
+  }, require(config.secret)());
  
   return {
     token: token,

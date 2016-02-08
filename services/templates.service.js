@@ -1,3 +1,13 @@
+var config = require('config.json');
+var mongo = require('mongodb');
+var monk = require('monk');
+var db = monk(config.connectionString);
+var usersDb = db.get('users');
+var _ = require('lodash');
+var jwt = require('jsonwebtoken');
+var bcrypt = require('bcryptjs');
+var Q = require('q');
+
 var templates = {
  
   getAll: function(req, res) {
