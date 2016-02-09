@@ -16,12 +16,13 @@ var templates = {
   },
  
   getOne: function(req, res) {
+    console.log("getOne");
     var template = null;
     var id = req.params.id;
 
     //Get specific template by given id from db
 
-    template !== null ? res.json(template) : res.json({"STATUS": "404 NOT FOUND"})
+    template !== null ? res.json(template) : res.json({"STATUS": "404 NOT FOUND"});
   },
  
   create: function(req, res) {

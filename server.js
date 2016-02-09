@@ -1,4 +1,4 @@
-﻿require('rootpath')();
+require('rootpath')();
 var express = require('express');
 var app = express();
 var session = require('express-session');
@@ -21,8 +21,10 @@ app.use('/register', require('./controllers/register.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
 
+//All rest api need  to be checked for token
+app.all('/report/*', [require('./middlewares/validateRequest')])
 //route for rest api that is consumed by mobile
-app.use('/rest' require('./controller/rest.controller'));
+app.use('/report', require('./controllers/report.controller'));
 
 // make '/app' default route
 app.get('/', function (req, res) {
