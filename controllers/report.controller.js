@@ -3,7 +3,6 @@ var router = express.Router();
 var templates = require('services/templates.service');
 var auth = require('services/auth.service');
 
-console.log("call back " + templates.get);
 router.post('/muser', auth.login);
 
 router.get('/report/template/:id', templates.getOne);
@@ -14,4 +13,6 @@ router.post('/report/template/', templates.create);
 
 router.put('/report/template/:id', templates.update);
 
-router.delete('/report/admin/template/:id', template.delete);
+router.delete('/report/admin/template/:id', templates.delete);
+
+module.exports = router;

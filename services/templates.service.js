@@ -48,4 +48,4 @@ var templates = {
   }
 };
 
-module.export = templates;
+module.exports = templates;
