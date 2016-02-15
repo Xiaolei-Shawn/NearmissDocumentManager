@@ -4,10 +4,10 @@ var config = require('config.json');
 var auth = {
  
   login: function(req, res) {
- 
+    console.log("validate login");
     var username = req.body.username || '';
     var password = req.body.password || '';
- 
+    console.log("user name : " + req.body.username);
     if (username == '' || password == '') {
       res.status(401);
       res.json({

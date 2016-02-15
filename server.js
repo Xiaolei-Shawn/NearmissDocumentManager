@@ -31,6 +31,13 @@ app.get('/', function (req, res) {
     return res.redirect('/app');
 });
 
+// If no route is matched by now, it must be a 404
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
 // start server
 var server = app.listen(3000, function () {
     console.log('Server listening at http://' + server.address().address + ':' + server.address().port);

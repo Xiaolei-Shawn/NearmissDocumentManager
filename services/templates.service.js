@@ -16,7 +16,6 @@ var templates = {
   },
  
   getOne: function(req, res) {
-    console.log("getOne");
     var template = null;
     var id = req.params.id;
 
