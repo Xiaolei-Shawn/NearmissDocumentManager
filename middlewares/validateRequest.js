@@ -1,4 +1,4 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');//require('jwt-simple');
 var validateUser = require('../services/auth.service').validateUser;
 var config = require('config.json');
  
@@ -13,11 +13,13 @@ module.exports = function(req, res, next) {
   
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
- 
+  console.log("token : " + req.body.access_token.username);
+  
   if (token || key) {
     try {
-      var decoded = jwt.decode(token, require(config.secret)());
- 
+      console.log("secret: " + config.secret);
+      var decoded = jwt.sign(token, config.secret);
+      console.log("decoded token : " + decoded);
       if (decoded.exp <= Date.now()) {
         res.status(400);
         res.json({
