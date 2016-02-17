@@ -4,10 +4,8 @@ var config = require('config.json');
 var auth = {
  
   login: function(req, res) {
-    console.log("validate login");
     var username = req.body.username || '';
     var password = req.body.password || '';
-    console.log("user name : " + req.body.username);
     if (username == '' || password == '') {
       res.status(401);
       res.json({
@@ -40,19 +38,16 @@ var auth = {
   },
  
   validate: function(username, password) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
+    //Validate the given credentials
+
  
     return dbUserObj;
   },
  
-  validateUser: function(username) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
+  findUser: function(username) {
+    console.log("find user : " + username);
+    //find user with given name
+    var dbUserObj = {  
       name: 'arvind',
       role: 'admin',
       username: 'arvind@myapp.com'
