@@ -1,6 +1,11 @@
-﻿<h1>My Account</h1>
-<div class="form-container">
-    <form method="post">
+﻿
+<div class="row">
+  <div class="col-md-4">
+    <form name="form">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Your profile
+        <form method="post">
         <div class="form-group">
             <label for="firstName">First name</label>
             <input type="text" id="firstName" class="form-control" ng-model="vm.user.firstName" required />
@@ -21,11 +26,11 @@
             <label for="password">Password</label>
             <input type="password" id="password" class="form-control" ng-model="vm.user.password" required />
         </div>
-        <div class="form-group">
-            <button class="btn btn-primary" ng-click="vm.updateUser()">Update</button>
-            <button class="btn btn-danger" ng-click="vm.deleteUser()">Delete</button>
-
+        <div class="panel-footer">
+          <button type="update" class="btn btn-primary btn-success" ng-click="vm.updateUser()" ng-disabled="form.$invalid">Update</button>
+          <button type="button" class="btn btn-danger" ng-click="vm.deleteUser()">Delete</button>
         </div>
-        
+      </div>
     </form>
+  </div>
 </div>

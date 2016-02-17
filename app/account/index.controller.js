@@ -11,7 +11,6 @@
         vm.user = null;
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
-        vm.createUser = createUser;
 
         initController();
 
@@ -36,22 +35,13 @@
             UserService.Delete(vm.user._id)
                 .then(function () {
                     // log user out
-                    $window.location = '/login';
+                    $window.location = '/home';
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
         }
 
-        function createUser(){
-            UserService.create(vm.user)
-                .then(function () {
-                    FlashService.Success('User created')
-                })
-                .catch(function (error) {
-                   FlashService.Error(error);  
-               });
-        }
     }
 
 })();

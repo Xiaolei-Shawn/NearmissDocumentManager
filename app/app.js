@@ -1,55 +1,1 @@
-﻿(function () {
-    'use strict';
- 
-    angular
-        .module('app', ['ui.router'])
-        .config(config)
-        .run(run);
- 
-    function config($stateProvider, $urlRouterProvider) {
-        // default route
-        $urlRouterProvider.otherwise("/");
- 
-        $stateProvider
-            .state('home', {
-                url: '/',
-                templateUrl: 'home/index.html',
-                controller: 'Home.IndexController',
-                controllerAs: 'vm'
-               // data: { activeTab: 'home' }
-            })
-            .state('account', {
-                url: '/account',
-                templateUrl: 'account/index.html',
-                controller: 'Account.IndexController',
-                controllerAs: 'vm'
-              //  data: { activeTab: 'account' }
-            })
-            .state('dashoboard', {
-                url: '/dashoboard',
-                templateUrl: 'dashoboard/index.html',
-                controller: 'Dashoboard.IndexController',
-                controllerAs: 'vm'
-            })
-    }
- 
-    function run($http, $rootScope, $window) {
-        // add JWT token as default auth header
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;
- 
-        // update active tab on state change
-        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-            $rootScope.activeTab = toState.data.activeTab;
-        });
-    }
- 
-    // manually bootstrap angular after the JWT token is retrieved from the server
-    $(function () {
-        // get JWT token from server
-        $.get('/app/token', function (token) {
-            window.jwtToken = token;
- 
-            angular.bootstrap(document, ['app']);
-        });
-    });
-})();
+﻿  'use strict';angular.module('app', [      'ui.router',      'oc.lazyLoad',      'ui.bootstrap',      'angular-loading-bar'])      .run(run)      .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider', function($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {        $ocLazyLoadProvider.config({          debug:false,          events:true,        });        $urlRouterProvider.otherwise('/dashboard/home');        $stateProvider        .state('dashboard', {          url:'/dashboard',          templateUrl: 'dashboard/main.html',          resolve: {            loadMyDirectives:function($ocLazyLoad){              return $ocLazyLoad.load(              {                name:'app',                files:[                'directives/header/header.js',                'directives/header/header-notification/header-notification.js',                'directives/sidebar/sidebar.js',                'directives/sidebar/sidebar-search/sidebar-search.js'                ]              }),              $ocLazyLoad.load(              {               name:'toggle-switch',               files:["scripts/angular-toggle-switch.min.js",                      "styles/angular-toggle-switch.css"               ]             }),              $ocLazyLoad.load(              {                name:'ngAnimate',                files:["scripts/angular-animate.js"]              })              $ocLazyLoad.load(              {                name:'ngCookies',                files:["scripts/angular-cookies.js"]              })              $ocLazyLoad.load(              {                name:'ngResource',                files:["scripts/angular-resource.js"]              })              $ocLazyLoad.load(              {                name:'ngSanitize',                files:["scripts/angular-sanitize.js"]              })              $ocLazyLoad.load(              {                name:'ngTouch',                files:["scripts/angular-touch.js"]              })            }          }        })    .state('dashboard.home',{      url:'/home',      templateUrl:'dashboard/home.html',      resolve: {        loadMyFiles:function($ocLazyLoad) {          return $ocLazyLoad.load({            name:'app',            files:[            'directives/timeline/timeline.js',            'directives/notifications/notifications.js',            'directives/chat/chat.js',            'directives/dashboard/stats/stats.js'            ]          })        }      }    })  }]);    /*.state('dashboard.form',{        templateUrl:'views/form.html',        url:'/form'    })    .state('dashboard.blank',{        templateUrl:'views/pages/blank.html',        url:'/blank'    })    .state('login',{        templateUrl:'views/pages/login.html',        url:'/login'    })    .state('dashboard.chart',{        templateUrl:'views/chart.html',        url:'/chart',        controller:'ChartCtrl',        resolve: {          loadMyFile:function($ocLazyLoad) {            return $ocLazyLoad.load({              name:'chart.js',              files:[              'bower_components/angular-chart.js/dist/angular-chart.min.js',              'bower_components/angular-chart.js/dist/angular-chart.css'              ]          }),            $ocLazyLoad.load({                name:'sbAdminApp',                files:['scripts/controllers/chartContoller.js']            })        }    }    })    .state('dashboard.table',{        templateUrl:'views/table.html',        url:'/table'    })    .state('dashboard.panels-wells',{      templateUrl:'views/ui-elements/panels-wells.html',      url:'/panels-wells'    })    .state('dashboard.buttons',{        templateUrl:'views/ui-elements/buttons.html',        url:'/buttons'    })    .state('dashboard.notifications',{        templateUrl:'views/ui-elements/notifications.html',        url:'/notifications'    })    .state('dashboard.typography',{       templateUrl:'views/ui-elements/typography.html',       url:'/typography'    })    .state('dashboard.icons',{       templateUrl:'views/ui-elements/icons.html',       url:'/icons'    })    .state('dashboard.grid',{       templateUrl:'views/ui-elements/grid.html',       url:'/grid'    })    }]);    )*/        /*    function config($stateProvider, $urlRouterProvider) {            // default route            $urlRouterProvider.otherwise("/");                 $stateProvider                .state('home', {                    url: '/',                    templateUrl: 'home/index.html',                    controller: 'Home.IndexController',                    controllerAs: 'vm'                })                .state('account', {                    url: '/account',                    templateUrl: 'account/index.html',                    controller: 'Account.IndexController',                    controllerAs: 'vm'                })                .state('dashoboard', {                    url: '/dashoboard',                    templateUrl: 'dashoboard/index.html',                    controller: 'Dashoboard.IndexController',                    controllerAs: 'vm'                })    }*/    function run($http, $rootScope, $window) {            // add JWT token as default auth header            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.jwtToken;            // update active tab on state change           /* $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {              $rootScope.activeTab = toState.data.activeTab;            });*/          }        // manually bootstrap angular after the JWT token is retrieved from the server        $(function () {            // get JWT token from server            $.get('/app/token', function (token) {              window.jwtToken = token;              angular.bootstrap(document, ['app']);            });          });
