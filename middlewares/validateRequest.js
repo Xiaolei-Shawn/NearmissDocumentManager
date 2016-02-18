@@ -19,16 +19,23 @@ module.exports = function(req, res, next) {
       
       if(token){
         console.log("token " + token);
-        var decoded = jwt.sign(token, config.secret);
+        jwt.verify(token, config.secret, function(err, decoded){
+          if (err) {
+            
+            res.status(400);
+            res.json(err);
+            return;
+          }
+          /*if (decoded.exp <= Date.now()) {
+            res.status(400);
+            res.json({
+              "status": 400,
+              "message": "Token Expired"
+            });
+            return;
+          }*/
+        });
         
-        if (decoded.exp <= Date.now()) {
-          res.status(400);
-          res.json({
-            "status": 400,
-            "message": "Token Expired"
-          });
-          return;
-        }
       }
  
       // Authorize the user to see if s/he can access our resources

@@ -1,4 +1,4 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');//('jwt-simple');
 var config = require('config.json');
 
 var auth = {
@@ -39,7 +39,11 @@ var auth = {
  
   validate: function(username, password) {
     //Validate the given credentials
-
+    var dbUserObj = {  
+      name: 'arvind',
+      role: 'admin',
+      username: 'arvind@myapp.com'
+    };
  
     return dbUserObj;
   },
@@ -59,21 +63,27 @@ var auth = {
  
 // private method
 function genToken(user) {
-  var expires = expiresIn(7); // 7 days
-  var token = jwt.encode({
-    exp: expires
-  }, config.secret);
+  var expires = expiresInSecond(3600);
+  var token = jwt.sign({user: user, exp: expires}, config.secret, {expiresIn : 3600});
  
-  return {
+ return {
     token: token,
     expires: expires,
     user: user
   };
 }
  
-function expiresIn(numDays) {
+function expiresInDay(numDays) {
   var dateObj = new Date();
   return dateObj.setDate(dateObj.getDate() + numDays);
+}
+function expiresInHour(numHours) {
+  var dateObj = new Date();
+  return dateObj.setHours(dateObj.getHours() + numHours);
+}
+function expiresInSecond(numSeconds) {
+  var dateObj = new Date();
+  return dateObj.setSeconds(dateObj.getSeconds() + numSeconds);
 }
  
 module.exports = auth;

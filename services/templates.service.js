@@ -11,7 +11,7 @@ var Q = require('q');
 var templates = {
  
   getAll: function(req, res) {
-    var allProducts = data; // Spoof a DB call
+    var allProducts = {}; // Spoof a DB call
     res.json(allProducts);
   },
  
