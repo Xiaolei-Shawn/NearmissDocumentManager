@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');//('jwt-simple');
 var config = require('config.json');
+var dbService = require('services/db.service');
 
 var auth = {
  
@@ -16,7 +17,7 @@ var auth = {
     }
  
     // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = auth.validate(username, password);
+    var dbUserObj = dbService.validateUser(username, null, null, password);
 
     if (!dbUserObj) { // If authentication fails, we send a 401 back
       res.status(401);
@@ -51,13 +52,8 @@ var auth = {
   findUser: function(username) {
     console.log("find user : " + username);
     //find user with given name
-    var dbUserObj = {  
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
- 
-    return dbUserObj;
+
+    return dbService.findUser(username, null, null);
   },
 }
  
