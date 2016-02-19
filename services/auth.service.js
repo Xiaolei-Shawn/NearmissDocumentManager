@@ -1,13 +1,12 @@
-var jwt = require('jwt-simple');
+var jwt = require('jsonwebtoken');//('jwt-simple');
 var config = require('config.json');
+var dbService = require('services/db.service');
 
 var auth = {
  
   login: function(req, res) {
-    console.log("validate login");
     var username = req.body.username || '';
     var password = req.body.password || '';
-    console.log("user name : " + req.body.username);
     if (username == '' || password == '') {
       res.status(401);
       res.json({
@@ -18,7 +17,7 @@ var auth = {
     }
  
     // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = auth.validate(username, password);
+    var dbUserObj = dbService.validateUser(username, null, null, password);
 
     if (!dbUserObj) { // If authentication fails, we send a 401 back
       res.status(401);
@@ -40,8 +39,8 @@ var auth = {
   },
  
   validate: function(username, password) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
+    //Validate the given credentials
+    var dbUserObj = {  
       name: 'arvind',
       role: 'admin',
       username: 'arvind@myapp.com'
@@ -50,35 +49,37 @@ var auth = {
     return dbUserObj;
   },
  
-  validateUser: function(username) {
-    // spoofing the DB response for simplicity
-    var dbUserObj = { // spoofing a userobject from the DB. 
-      name: 'arvind',
-      role: 'admin',
-      username: 'arvind@myapp.com'
-    };
- 
-    return dbUserObj;
+  findUser: function(username) {
+    console.log("find user : " + username);
+    //find user with given name
+
+    return dbService.findUser(username, null, null);
   },
 }
  
 // private method
 function genToken(user) {
-  var expires = expiresIn(7); // 7 days
-  var token = jwt.encode({
-    exp: expires
-  }, config.secret);
+  var expires = expiresInSecond(3600);
+  var token = jwt.sign({user: user, exp: expires}, config.secret, {expiresIn : 3600});
  
-  return {
+ return {
     token: token,
     expires: expires,
     user: user
   };
 }
  
-function expiresIn(numDays) {
+function expiresInDay(numDays) {
   var dateObj = new Date();
   return dateObj.setDate(dateObj.getDate() + numDays);
+}
+function expiresInHour(numHours) {
+  var dateObj = new Date();
+  return dateObj.setHours(dateObj.getHours() + numHours);
+}
+function expiresInSecond(numSeconds) {
+  var dateObj = new Date();
+  return dateObj.setSeconds(dateObj.getSeconds() + numSeconds);
 }
  
 module.exports = auth;

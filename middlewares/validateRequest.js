@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');//require('jwt-simple');
-var validateUser = require('../services/auth.service').validateUser;
+var findUser = require('../services/auth.service').findUser;
 var config = require('config.json');
  
 module.exports = function(req, res, next) {
@@ -13,29 +13,38 @@ module.exports = function(req, res, next) {
   
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
-  console.log("token : " + req.body.access_token.username);
   
   if (token || key) {
     try {
-      console.log("secret: " + config.secret);
-      var decoded = jwt.sign(token, config.secret);
-      console.log("decoded token : " + decoded);
-      if (decoded.exp <= Date.now()) {
-        res.status(400);
-        res.json({
-          "status": 400,
-          "message": "Token Expired"
+      
+      if(token){
+        console.log("token " + token);
+        jwt.verify(token, config.secret, function(err, decoded){
+          if (err) {
+            
+            res.status(400);
+            res.json(err);
+            return;
+          }
+          /*if (decoded.exp <= Date.now()) {
+            res.status(400);
+            res.json({
+              "status": 400,
+              "message": "Token Expired"
+            });
+            return;
+          }*/
         });
-        return;
+        
       }
  
       // Authorize the user to see if s/he can access our resources
- 
-      var dbUser = validateUser(key); // The key would be the logged in user's username
+      
+      var dbUser = findUser(key); // The key would be the logged in user's username
       if (dbUser) {
  
  
-        if ((req.url.indexOf('admin') >= 0 && dbUser.role == 'admin') || (req.url.indexOf('admin') < 0 && req.url.indexOf('/rest/') >= 0)) {
+        if ((req.url.indexOf('admin') >= 0 && dbUser.role == 'admin') || (req.url.indexOf('admin') < 0 && req.url.indexOf('/report/') >= 0)) {
           next(); // To move to next middleware
         } else {
           res.status(403);
@@ -50,7 +59,7 @@ module.exports = function(req, res, next) {
         res.status(401);
         res.json({
           "status": 401,
-          "message": "Invalid User"
+          "message": "Unexisted User"
         });
         return;
       }

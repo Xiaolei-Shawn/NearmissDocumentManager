@@ -9,7 +9,6 @@
     "express-jwt": "^3.0.1",
     "express-session": "^1.11.3",
     "jsonwebtoken": "^5.0.2",
-    "jwt-simple": "^0.4.1",
     "lodash": "^3.10.0",
     "mongodb": "^1.4.40",
     "monk": "^1.0.1",
