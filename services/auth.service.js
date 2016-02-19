@@ -4,10 +4,10 @@ var config = require('config.json');
 var auth = {
  
   login: function(req, res) {
- 
+    console.log("validate login");
     var username = req.body.username || '';
     var password = req.body.password || '';
- 
+    console.log("user name : " + req.body.username);
     if (username == '' || password == '') {
       res.status(401);
       res.json({
@@ -19,7 +19,7 @@ var auth = {
  
     // Fire a query to your DB and check if the credentials are valid
     var dbUserObj = auth.validate(username, password);
-   
+
     if (!dbUserObj) { // If authentication fails, we send a 401 back
       res.status(401);
       res.json({
@@ -67,7 +67,7 @@ function genToken(user) {
   var expires = expiresIn(7); // 7 days
   var token = jwt.encode({
     exp: expires
-  }, require(config.secret)());
+  }, config.secret);
  
   return {
     token: token,

@@ -21,7 +21,7 @@ var templates = {
 
     //Get specific template by given id from db
 
-    template !== null ? res.json(template) : res.json({"STATUS": "404 NOT FOUND"})
+    template !== null ? res.json(template) : res.json({"STATUS": "404 NOT FOUND"});
   },
  
   create: function(req, res) {
@@ -47,4 +47,4 @@ var templates = {
   }
 };
 
-module.export = templates;
+module.exports = templates;
