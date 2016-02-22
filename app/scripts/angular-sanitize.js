@@ -266,7 +266,7 @@ var htmlAttrs = toMap('abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacin
 
 // SVG attributes (without "id" and "name" attributes)
 // https://wiki.whatwg.org/wiki/Sanitization_rules#svg_Attributes
-var svgAttrs = toMap('accent-height,accumulate,additive,alphabetic,arabic-form,ascent,' +
+var svgAttrs = toMap('accent-height,accumulate,additive,alphabetic,arabic-field,ascent,' +
     'baseProfile,bbox,begin,by,calcMode,cap-height,class,color,color-rendering,content,' +
     'cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,' +
     'font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,' +
@@ -424,7 +424,7 @@ function encodeEntities(value) {
 /**
  * create an HTML/XML writer which writes to buffer
  * @param {Array} buf use buf.join('') to get out sanitized html string
- * @returns {object} in the form of {
+ * @returns {object} in the field of {
  *     start: function(tag, attrs) {},
  *     end: function(tag) {},
  *     chars: function(text) {},

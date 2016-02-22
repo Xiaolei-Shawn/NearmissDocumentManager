@@ -2978,7 +2978,7 @@ var $$AnimationProvider = ['$animateProvider', function($animateProvider) {
         var animations = [];
         forEach(animationQueue, function(entry) {
           // the element was destroyed early on which removed the runner
-          // form its storage. This means we can't animate this element
+          // field its storage. This means we can't animate this element
           // at all and it already has been closed due to destruction.
           if (getRunner(entry.element)) {
             animations.push(entry);
@@ -3378,7 +3378,7 @@ var ngAnimateSwapDirective = ['$animate', '$rootScope', function($animate, $root
  * | {@link ng.directive:ngIf#animations ngIf}                                                                | enter and leave                                                          |
  * | {@link ng.directive:ngClass#animations ngClass}                                                          | add and remove (the CSS class(es) present)                               |
  * | {@link ng.directive:ngShow#animations ngShow} & {@link ng.directive:ngHide#animations ngHide}            | add and remove (the ng-hide class value)                                 |
- * | {@link ng.directive:form#animation-hooks form} & {@link ng.directive:ngModel#animation-hooks ngModel}    | add and remove (dirty, pristine, valid, invalid & all other validations) |
+ * | {@link ng.directive:field#animation-hooks field} & {@link ng.directive:ngModel#animation-hooks ngModel}    | add and remove (dirty, pristine, valid, invalid & all other validations) |
  * | {@link module:ngMessages#animations ngMessages}                                                          | add and remove (ng-active & ng-inactive)                                 |
  * | {@link module:ngMessages#animations ngMessage}                                                           | enter and leave                                                          |
  *

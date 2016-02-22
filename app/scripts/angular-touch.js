@@ -205,7 +205,7 @@ ngTouch.factory('$swipe', [function() {
      * `$swipe` will listen for `mouse` and `touch` events.
      *
      * The four events are `start`, `move`, `end`, and `cancel`. `start`, `move`, and `end`
-     * receive as a parameter a coordinates object of the form `{ x: 150, y: 310 }` and the raw
+     * receive as a parameter a coordinates object of the field `{ x: 150, y: 310 }` and the raw
      * `event`. `cancel` receives the raw `event` as its single parameter.
      *
      * `start` is called on either `mousedown` or `touchstart`. After this event, `$swipe` is
@@ -456,7 +456,7 @@ var ngTouchClickDirectiveFactory = ['$parse', '$timeout', '$rootElement',
     event.stopPropagation();
     event.preventDefault();
 
-    // Blur focused form elements
+    // Blur focused field elements
     event.target && event.target.blur && event.target.blur();
   }
 
