@@ -1,6 +1,7 @@
 var jwt = require('jsonwebtoken');//('jwt-simple');
 var config = require('config.json');
-var dbService = require('services/db.service');
+var dataService = require('services/data.service');
+var S = require('string');
 
 var auth = {
  
@@ -15,27 +16,36 @@ var auth = {
       });
       return;
     }
- 
-    // Fire a query to your DB and check if the credentials are valid
-    var dbUserObj = dbService.validateUser(username, null, null, password);
 
-    if (!dbUserObj) { // If authentication fails, we send a 401 back
-      res.status(401);
-      res.json({
-        "status": 401,
-        "message": "Invalid credentials"
-      });
-      return;
+    if(S(username).contains('@')){
+      //email used in username
+      dataService.validateUser(username, null, password)
+        .then(function(user){
+            res.json(genToken(user));
+        })
+        .catch(function(err){
+            res.status(401);
+            res.json({
+              "status": 401,
+              "message": "Invalid credentials for given email"
+            });
+            return;
+        });
+    } else {
+      //telephone used in username
+       dataService.validateUser(null, username, password)
+        .then(function(user){
+            res.json(genToken(user));
+        })
+        .catch(function(err){
+            res.status(401);
+            res.json({
+              "status": 401,
+              "message": "Invalid credentials for given phone number"
+            });
+            return;
+        });
     }
- 
-    if (dbUserObj) {
- 
-      // If authentication is success, we will generate a token
-      // and dispatch it to the client
- 
-      res.json(genToken(dbUserObj));
-    }
- 
   },
  
   validate: function(username, password) {
@@ -49,11 +59,8 @@ var auth = {
     return dbUserObj;
   },
  
-  findUser: function(username) {
-    console.log("find user : " + username);
-    //find user with given name
-
-    return dbService.findUser(username, null, null);
+  findUser: function(email, telephone) {
+    return dataService.findUser(email, telephone);
   },
 }
  

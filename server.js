@@ -14,6 +14,11 @@ app.use(session({ secret: config.secret, resave: false, saveUninitialized: true 
 
 // use JWT auth to secure the api
 app.use('/api', expressJwt({ secret: config.secret }).unless({ path: ['/api/users/authenticate', '/api/users/register'] }));
+app.use(function(err, req, res, next){
+	if (err.name === 'UnauthorizedError') {
+    res.status(401).send('invalid token... ' + req.body.authorization);
+  }
+});
 
 // routes
 app.use('/login', require('./controllers/login.controller'));
