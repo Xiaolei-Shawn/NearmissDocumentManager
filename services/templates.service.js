@@ -8,7 +8,7 @@ var templates = {
         res.json(allTemplates);
      })
      .catch(function(err){
-        res.json()
+        res.json();
      })
      .done();
     

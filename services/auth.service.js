@@ -2,6 +2,7 @@ var jwt = require('jsonwebtoken');//('jwt-simple');
 var config = require('config.json');
 var dataService = require('services/data.service');
 var S = require('string');
+var _ = require('lodash');
 
 var auth = {
  
@@ -21,7 +22,24 @@ var auth = {
       //email used in username
       dataService.validateUser(username, null, password)
         .then(function(user){
-            res.json(genToken(user));
+            dataService.getAllTemplates()
+            .then(function(allTemplates){
+              res.json( {
+                token: genToken(user),
+                user: _.omit(user, ['hash', '_id']),
+                templates: _.map(allTemplates, _.property('templateid'))
+              });
+              return;
+            })
+            .catch(function(err){
+              res.json( {
+                token: genToken(user),
+                expires: expires,
+                user: user,
+                templates: err
+              })
+            })
+            //res.json(genToken(user));
         })
         .catch(function(err){
             res.status(401);
@@ -68,12 +86,8 @@ var auth = {
 function genToken(user) {
   var expires = expiresInSecond(3600);
   var token = jwt.sign({user: user, exp: expires}, config.secret, {expiresIn : 3600});
- 
- return {
-    token: token,
-    expires: expires,
-    user: user
-  };
+  return token;
+
 }
  
 function expiresInDay(numDays) {
