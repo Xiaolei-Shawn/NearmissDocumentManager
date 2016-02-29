@@ -27,7 +27,13 @@ var auth = {
               res.json( {
                 token: genToken(user),
                 user: _.omit(user, ['hash', '_id']),
-                templates: _.map(allTemplates, _.property('templateid'))
+                //templates: _.map(allTemplates, _.property('templateid'))
+                templateinfo: _.map(allTemplates, function(template){
+                  return {
+                    templatename: template.name,
+                    templateid: template.templateid
+                  }
+                })
               });
               return;
             })
@@ -36,7 +42,7 @@ var auth = {
                 token: genToken(user),
                 expires: expires,
                 user: user,
-                templates: err
+                templateinfo: err
               })
             })
             //res.json(genToken(user));
@@ -53,7 +59,29 @@ var auth = {
       //telephone used in username
        dataService.validateUser(null, username, password)
         .then(function(user){
-            res.json(genToken(user));
+             dataService.getAllTemplates()
+            .then(function(allTemplates){
+              res.json( {
+                token: genToken(user),
+                user: _.omit(user, ['hash', '_id']),
+                //templates: _.map(allTemplates, _.property('templateid'))
+                templateinfo: _.map(allTemplates, function(template){
+                  return {
+                    templatename: template.name,
+                    templateid: template.templateid
+                  }
+                })
+              });
+              return;
+            })
+            .catch(function(err){
+              res.json( {
+                token: genToken(user),
+                expires: expires,
+                user: user,
+                templateinfo: err
+              })
+            })
         })
         .catch(function(err){
             res.status(401);

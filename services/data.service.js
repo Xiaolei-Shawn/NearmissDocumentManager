@@ -13,7 +13,7 @@ var dataService = {
 	getOneTemplate: function(id){
 		var deferred = Q.defer();
 
-    	templateCollection.findById('id', function (err, template) {
+    	templateCollection.findOne({templateid: id}, function (err, template) {
 	        if (err) deferred.reject(err);
 
 	        if (template) {

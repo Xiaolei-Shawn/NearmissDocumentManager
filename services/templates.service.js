@@ -1,4 +1,5 @@
 var dataService = require('services/data.service');
+var _ = require('lodash');
 
 var templates = {
  
@@ -19,7 +20,7 @@ var templates = {
 
     dataService.getOneTemplate(id)
       .then(function(template){
-        res.json(template);
+        res.json(_.omit(template, '_id'));
     })
     .catch(function(err){
         res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
