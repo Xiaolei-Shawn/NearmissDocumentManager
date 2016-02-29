@@ -1,18 +1,26 @@
 var express = require('express');
 var router = express.Router();
-var templates = require('services/templates.service');
+var template = require('services/template.service');
+var report = require('services/report.service');
 var auth = require('services/auth.service');
 
 router.post('/mlogin', auth.login);
 
-router.get('/template/:id', templates.getOne);
+router.get('/template/:id', template.getOne);
 
-router.get('/templates', templates.getAll);
+/*
+//Disable the following api from mobile user
 
-router.post('/template/', templates.create);
+router.get('/templates', template.getAll);
 
-router.put('/template/:id', templates.update);
+router.post('/template/', template.create);
 
-router.delete('/admin/template/:id', templates.delete);
+router.put('/template/:id', template.update);
+
+router.delete('/admin/template/:id', template.delete);
+
+*/
+
+router.post('/', report.create);
 
 module.exports = router;

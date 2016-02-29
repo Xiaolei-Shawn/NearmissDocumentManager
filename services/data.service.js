@@ -2,8 +2,9 @@ var config = require('config.json');
 var mongo = require('mongodb');
 var monk = require('monk');
 var db = monk(config.connectionString);
-var usersDb = db.get('users');
+var userCollection = db.get('users');
 var templateCollection = db.get('template');
+var reportCollection = db.get('report');
 var _ = require('lodash');
 var jwt = require('jsonwebtoken');
 var bcrypt = require('bcryptjs');
@@ -42,21 +43,28 @@ var dataService = {
 
     	return deferred.promise;
 	},
-	createTemplate: function(template) {
+
+	createReport : function(report){
 		var deferred = Q.defer();
 
-    	templateCollection.insert(template, function (err, template) {
+    	reportCollection.insert(report, function (err, report) {
 	        if (err) deferred.reject(err);
 
-	        if (template) {
-	            deferred.resolve(template);
+	        if (report) {
+	            deferred.resolve(report);
 	        } else {
-	            // template insert failed
+	            // report insert failed
 	            deferred.resolve();
 	        }
     	});
 
     	return deferred.promise;
+	},
+
+	/*
+	//Disable following data services for template services
+	createTemplate: function(template) {
+		
 	},
 	 
 	updateTemplate: function(template, id) {
@@ -66,11 +74,13 @@ var dataService = {
 	deleteTemplate: function(id) {
 	    
 	},
+	*/
+
 	findUser: function(email, telephone){
 		var deferred = Q.defer();
 
 		if(telephone){
-			usersDb.findOne({telephoneNumber: telephone}, function (err, user) {
+			userCollection.findOne({telephoneNumber: telephone}, function (err, user) {
 		        if (err) deferred.reject(err);
 
 		        if (user) {
@@ -80,7 +90,7 @@ var dataService = {
 		        }
 		     })  
 		} else if(email){
-			usersDb.findOne({email: email}, function (err, user) {
+			userCollection.findOne({email: email}, function (err, user) {
 		        if (err) deferred.reject(err);
 
 		        if (user) {
@@ -105,7 +115,7 @@ var dataService = {
 			var deferred = Q.defer();
 
 			if(telephone){
-				usersDb.findOne({phoneNumber: telephone}, function (err, user) {
+				userCollection.findOne({phoneNumber: telephone}, function (err, user) {
 			        if (err) deferred.reject(err);
 
 			        if (user && bcrypt.compareSync(password, user.hash)) {
@@ -115,7 +125,7 @@ var dataService = {
 			        }
 			    })
 			} else if(email){
-				usersDb.findOne({email: email}, function (err, user) {
+				userCollection.findOne({email: email}, function (err, user) {
 			        if (err) deferred.reject(err);
 
 			        if (user && bcrypt.compareSync(password, user.hash)) {

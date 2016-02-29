@@ -1,19 +1,7 @@
 var dataService = require('services/data.service');
 var _ = require('lodash');
 
-var templates = {
- 
-  getAll: function(req, res) {
-    dataService.getAllTemplates()
-     .then(function(allTemplates){
-        res.json(allTemplates);
-     })
-     .catch(function(err){
-        res.json();
-     })
-     .done();
-    
-  },
+var template = {
  
   getOne: function(req, res) {
     var id = req.params.id;
@@ -25,8 +13,23 @@ var templates = {
     .catch(function(err){
         res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
     });
-  },
+  }
  
+ /*
+ //Disable the following services
+
+ getAll: function(req, res) {
+    dataService.getAllTemplates()
+     .then(function(allTemplates){
+        res.json(allTemplates);
+     })
+     .catch(function(err){
+        res.json();
+     })
+     .done();
+    
+  },
+
   create: function(req, res) {
     var template = req.body;
 
@@ -35,7 +38,7 @@ var templates = {
         res.json({"STATUS": "200 OK"});
     })
     .catch(function(err){
-        res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
+        res.json(err);
     });
   },
  
@@ -53,6 +56,7 @@ var templates = {
     dataService.deleteTemplate(id);
     res.json(true);
   }
+  */
 };
 
-module.exports = templates;
+module.exports = template;
