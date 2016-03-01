@@ -13,10 +13,7 @@ var template = {
     .catch(function(err){
         res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
     });
-  }
- 
- /*
- //Disable the following services
+  },
 
  getAll: function(req, res) {
     dataService.getAllTemplates()
@@ -56,7 +53,7 @@ var template = {
     dataService.deleteTemplate(id);
     res.json(true);
   }
-  */
+  
 };
 
 module.exports = template;

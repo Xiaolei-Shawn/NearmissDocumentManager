@@ -61,8 +61,6 @@ var dataService = {
     	return deferred.promise;
 	},
 
-	/*
-	//Disable following data services for template services
 	createTemplate: function(template) {
 		
 	},
@@ -74,7 +72,6 @@ var dataService = {
 	deleteTemplate: function(id) {
 	    
 	},
-	*/
 
 	findUser: function(email, telephone){
 		var deferred = Q.defer();
