@@ -21,6 +21,6 @@ router.delete('/admin/template/:id', template.delete);
 
 */
 
-router.post('/', report.create);
+router.post('/report/', report.create);
 
 module.exports = router;

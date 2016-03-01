@@ -25,12 +25,13 @@ app.use('/login', require('./controllers/login.controller'));
 app.use('/register', require('./controllers/register.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
+app.use('/api/reports', require('./controllers/api/report.controller'));
 
 //All rest api need  to be checked for token
-app.all('/report/*', [require('./middlewares/validateRequest')])
+app.all('/mapi/*', [require('./middlewares/validateRequest')])
 //route for rest api that is consumed by mobile
 //app.use('/rest' require('./controller/rest.controller'));
-app.use('/report', require('./controllers/report.controller'));
+app.use('/mapi', require('./controllers/report.controller'));
 
 
 // make '/app' default route
