@@ -12,6 +12,10 @@ router.get('/template/:id', template.getOne);
 
 router.post('/report/', report.create);
 
+router.get('/reports/', report.getAll);
+
+router.get('/report/:id', report.getOne);
+
 //Only for angular usage
 
 router.get('/web/templates', template.getAll);
