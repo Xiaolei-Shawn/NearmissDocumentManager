@@ -4,23 +4,22 @@ var template = require('services/template.service');
 var report = require('services/report.service');
 var auth = require('services/auth.service');
 
+//Mobile api
+
 router.post('/mlogin', auth.login);
 
 router.get('/template/:id', template.getOne);
 
-/*
-//Disable the following api from mobile user
-
-router.get('/templates', template.getAll);
-
-router.post('/template/', template.create);
-
-router.put('/template/:id', template.update);
-
-router.delete('/admin/template/:id', template.delete);
-
-*/
-
 router.post('/report/', report.create);
+
+//Only for angular usage
+
+router.get('/web/templates', template.getAll);
+
+router.post('/web/template/', template.create);
+
+router.put('/web/template/:id', template.update);
+
+router.delete('/web/template/:id', template.delete);
 
 module.exports = router;
