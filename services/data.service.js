@@ -18,9 +18,24 @@ var dataService = {
 	        if (err) deferred.reject(err);
 
 	        if (template) {
-	            deferred.resolve(_.omit(template, 'hash'));
+	            deferred.resolve(_.omit(template, ['_id', 'hash']));
 	        } else {
 	            // template not found
+	            deferred.resolve();
+	        }
+    	});
+
+    	return deferred.promise;
+	},
+
+	getOneReport: function(id){
+		var deferred = Q.defer();
+    	reportCollection.findOne({reportid: id}, function (err, report) {
+	        if (err) deferred.reject(err);
+	        if (report) {
+	            deferred.resolve(_.omit(report, ['_id', 'hash']));
+	        } else {
+	            // report not found
 	            deferred.resolve();
 	        }
     	});
@@ -37,6 +52,23 @@ var dataService = {
 	            deferred.resolve(templates);
 	        } else {
 	            // template not found
+	            deferred.resolve();
+	        }
+    	});
+
+    	return deferred.promise;
+	},
+
+	getAllReports: function(){
+		var deferred = Q.defer();
+
+    	reportCollection.find({}, function (err, reports) {
+	        if (err) deferred.reject(err);
+
+	        if (reports) {
+	            deferred.resolve(reports);
+	        } else {
+	            // report not found
 	            deferred.resolve();
 	        }
     	});
@@ -62,7 +94,20 @@ var dataService = {
 	},
 
 	createTemplate: function(template) {
-		
+		var deferred = Q.defer();
+
+    	templateCollection.insert(template, function (err, template) {
+	        if (err) deferred.reject(err);
+
+	        if (report) {
+	            deferred.resolve(template);
+	        } else {
+	            // template insert failed
+	            deferred.resolve();
+	        }
+    	});
+
+    	return deferred.promise;
 	},
 	 
 	updateTemplate: function(template, id) {
