@@ -8,7 +8,7 @@ var template = {
 
     dataService.getOneTemplate(id)
       .then(function(template){
-        res.json(_.omit(template, '_id'));
+        res.json(template);
     })
     .catch(function(err){
         res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
