@@ -43,15 +43,25 @@ var template = {
     var updateTemplate = req.body;
     var id = req.params.id;
     //Update specific template in db
-    dataService.updateTemplate(updateTemplate, id);
-    res.json(updateProduct);
+    dataService.updateTemplate(template, id)
+      .then(function(template){
+        res.json({"STATUS": "200 OK"});
+    })
+    .catch(function(err){
+        res.json(err);
+    });
   },
  
   delete: function(req, res) {
     var id = req.params.id;
     //Delete specific template from bd
-    dataService.deleteTemplate(id);
-    res.json(true);
+    dataService.deleteTemplate(id)
+      .then(function(template){
+        res.json({"STATUS": "200 OK"});
+    })
+    .catch(function(err){
+        res.json(err);
+    });
   }
   
 };

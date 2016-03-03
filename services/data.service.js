@@ -99,7 +99,7 @@ var dataService = {
     	templateCollection.insert(template, function (err, template) {
 	        if (err) deferred.reject(err);
 
-	        if (report) {
+	        if (template) {
 	            deferred.resolve(template);
 	        } else {
 	            // template insert failed
@@ -111,11 +111,30 @@ var dataService = {
 	},
 	 
 	updateTemplate: function(template, id) {
-	    
+	    var deferred = Q.defer();
+    	templateCollection.update({templateid: id}, template, function (err, template) {
+	        if (err) deferred.reject(err);
+
+	        if (template) {
+	            deferred.resolve(template);
+	        } else {
+	            deferred.resolve();
+	        }
+    	});
+
+    	return deferred.promise;
 	},
 	 
 	deleteTemplate: function(id) {
-	    
+	    var deferred = Q.defer();
+
+    	templateCollection.remove({templateid: id}, function (err) {
+	        if (err) deferred.reject(err);
+
+	        deferred.resolve(true);
+    	});
+
+    	return deferred.promise;
 	},
 
 	findUser: function(email, telephone){

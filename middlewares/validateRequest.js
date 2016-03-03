@@ -12,14 +12,14 @@ module.exports = function(req, res, next) {
   //if(req.method == 'OPTIONS') next();
 
   //Querying web data is not allowed from mobile
-  if (S(req.url).contains('web')) {
+/*  if (S(req.url).contains('web')) {
           res.status(401);
           res.json({
             "status": 401,
             "message": "Unaccessable path from mobile"
           });
           return;
-  }
+  }*/
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];
   
