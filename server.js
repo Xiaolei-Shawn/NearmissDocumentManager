@@ -47,6 +47,21 @@ app.use(function(req, res, next) {
 });
 
 // start server
-var server = app.listen(3000, function () {
-    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
-});
+
+var boot = function () {
+	var server = app.listen(3000, function () {
+	    console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+	});
+}
+var shutdown = function() {
+	server.close();
+}
+if (require.main === module) {
+	boot();
+}
+else {
+	console.info('Running app as a module')
+	exports.boot = boot;
+	exports.shutdown = shutdown;
+	exports.port = app.get('port');
+}
