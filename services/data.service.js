@@ -112,15 +112,25 @@ var dataService = {
 	 
 	updateTemplate: function(template, id) {
 	    var deferred = Q.defer();
-    	templateCollection.update({templateid: id}, template, function (err, template) {
+	    templateCollection.findOne({templateid: id}, function (err, template) {
 	        if (err) deferred.reject(err);
 
 	        if (template) {
-	            deferred.resolve(template);
+	            templateCollection.update({_id: template._id}, template, function (updateErr, updatedTemplate) {
+			        if (err) deferred.reject(updateErr);
+
+			        if (updatedTemplate) {
+			            deferred.resolve(updatedTemplate);
+			        } else {
+			            deferred.resolve();
+			        }
+		    	});
 	        } else {
+	            // template not found
 	            deferred.resolve();
 	        }
     	});
+    	
 
     	return deferred.promise;
 	},
