@@ -64,4 +64,5 @@ else {
 	exports.boot = boot;
 	exports.shutdown = shutdown;
 	exports.port = app.get('port');
+	exports.app = app;
 }
