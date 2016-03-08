@@ -1,13 +1,10 @@
 var assert = require('assert')
- ,boot = require('../server').boot
- ,shutdown = require('../server').shutdown
- ,port = require('../server').port
  ,app = require('../server').app
  ,request = require('supertest')
  ,expect = require('expect');
 
 
-  describe('Test Route with Token', function() {
+  describe('Test request validation', function() {
   var token = '',
       payload = {
           "x_key": "joeyzhaozhao@gmail.com",

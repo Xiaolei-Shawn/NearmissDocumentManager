@@ -1,6 +1,9 @@
 {
   "name": "nearmiss-app",
   "description": "nearmiss adminstrator management application",
+  "scripts" :{ 
+    "test" : "mocha"
+  },
   "dependencies": {
     "assert": "^1.3.0",
     "bcryptjs": "^2.1.0",
