@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('Account.IndexController', Controller);
+        .controller('AccountCtrl', Controller);
 
     function Controller($window, UserService, FlashService) {
         var vm = this;
