@@ -1,50 +1,64 @@
 ﻿    <!DOCTYPE html>
     <html class="no-js">
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
         <title>Nearmiss Management Application</title>
 
         <!-- Bootstrap Core CSS -->
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
         <!-- MetisMenu CSS -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.css" rel="stylesheet" />
-        <!-- Timeline CSS -->
-       <!--  <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/css/timeline.css" rel="stylesheet">  -->
-        <!-- Lodaingbar CSS -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.css" rel="stylesheet" />
-        <!-- Custom Fonts -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.css" rel="stylesheet">
 
-        <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/1.0.8/css/sb-admin-2.css" rel="stylesheet" /> -->
+        <!-- Lodaingbar CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.css" rel="stylesheet">
+        <!-- Custom Fonts -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/angular-bootstrap-datetimepicker/1.0.0/css/datetimepicker.css" rel="stylesheet">
+
         <!-- endbuild -->
 
         
         <!-- external scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/json3/3.3.2/json3.min.js"></script>
         <script src="https://rawgit.com/ocombe/ocLazyLoad/master/dist/ocLazyLoad.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.1.2/ui-bootstrap-tpls.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.0/ui-bootstrap-tpls.min.js"></script>
+
         <!-- Metis Menu Plugin JavaScript -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/metisMenu/1.1.3/metisMenu.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.js"></script>>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/api-check/7.2.4/api-check.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-formly/6.11.0/formly.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-formly-templates-bootstrap/4.3.1/angular-formly-templates-bootstrap.js"></script>
+
         <!-- Custom Theme JavaScript -->
         <script src="scripts/sb-admin-2.js"></script>
+
+
+
+
+
+
 
         <!-- application scripts -->
         <script src="app.js"></script>
         <script src="app-services/user.service.js"></script>
         <script src="app-services/flash.service.js"></script>
         <script src="dashboard/dashboard.controller.js"></script>
-        <script src="account/account.controller.js"></script>
+        <script src="profile/profile.controller.js"></script>
+        <script src="reportTemplateBuilder/builder.controller.js"></script>
         <script src="nearmissTemplate/nearmiss.controller.js"></script>
-        <script src="app-services/form.service.js"></script>
+        <script src="incidentTemplate/incident.controller.js"></script>
+        <script src="createNewAccount/userAccount.controller.js"></script>
+
+
+
 
 
 
@@ -58,7 +72,6 @@
            ga('send', 'pageview');
         </script>
 
-     
     </head>
     <body>
 

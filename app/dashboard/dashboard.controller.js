@@ -4,7 +4,7 @@
     angular
         .module('app')
 
-        .controller('Home.IndexController', Controller);
+        .controller('DashboardCtrl', Controller);
  
     function Controller(UserService) {
         var vm = this;
