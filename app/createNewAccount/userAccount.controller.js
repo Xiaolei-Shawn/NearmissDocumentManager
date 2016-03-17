@@ -6,10 +6,10 @@
         .module('app')
         .controller('AccountCtrl', Controller);
 
-    function Controller() {
+    function Controller($window, UserService, FlashService) {
 
         var vm = this;
-
+        vm.createAccount = createAccount;
         vm.model = {};
         vm.options = {};
 
@@ -25,7 +25,7 @@
                     type: 'text',
                     label: 'First Name',
                     placeholder: 'Enter your first name',
-                    required:'true'
+                    required:true
                 }
             },
             {
@@ -35,7 +35,7 @@
                     type: 'text',
                     label: 'Last Name',
                     placeholder: 'Enter your last name',
-                    required:'true'
+                    required:true
 
                 }
             },
@@ -45,7 +45,7 @@
                 templateOptions: {
                     label: 'Phone number',
                     placeholder: 'Enter your phone number',
-                    required:'true'
+                    required:true
                 }
             },
             {
@@ -55,12 +55,24 @@
                     type: 'email',
                     label: 'Email',
                     placeholder: 'Enter your Email',
-                    required:'true'
+                    required:true
                 }
             }
 
 
         ];
+
+        function createAccount() {
+            UserService.Create(vm.fields)
+                .then(function () {
+                    FlashService.Success('Account created');
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+        }
+
+
     }
 
 })();

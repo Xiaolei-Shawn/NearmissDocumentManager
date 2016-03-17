@@ -19,7 +19,7 @@
             <div class="panel-body", style=" height:700px; overflow:auto;">
                 <form name="form" novalidate>
                     <formly-form model="vm.model" fields="vm.fields" options="vm.options">
-                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block"  ng-click="vm.createTemplate()">Submit</button>
                     </formly-form>
                 </form>
             </div>

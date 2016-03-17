@@ -7,7 +7,6 @@
 
     function Controller($window, UserService, FlashService) {
         var vm = this;
-
         vm.user = null;
         vm.updateUser = updateUser;
         vm.deleteUser = deleteUser;
