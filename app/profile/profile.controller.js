@@ -23,7 +23,9 @@
         function updateUser() {
             UserService.Update(vm.user)
                 .then(function () {
-                    FlashService.Success('User updated');
+                    FlashService.Success('Your profile has been updated!');
+                  //  $window.location = '/#/home';
+
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
@@ -34,7 +36,7 @@
             UserService.Delete(vm.user._id)
                 .then(function () {
                     // log user out
-                    $window.location = '/dashboard';
+                    $window.location = '/#/home';
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

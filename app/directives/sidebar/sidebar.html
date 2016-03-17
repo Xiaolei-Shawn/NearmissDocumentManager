@@ -21,35 +21,6 @@
                     <span></span></a>
             </li>
 
-            <li ng-class="{active: collapseVar==2}">{{dropDown}}
-                <a href="" ng-click="check(2)"><i class="fa fa fa-eye fa-fw"></i> Preview Report Template<span
-                        class="fa arrow"></span></a>
-                <ul class="nav nav-second-level" collapse="collapseVar!=2">
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.nearmiss"><i class="fa fa-exclamation-circle fa-fw"></i> Nearmiss Report
-                            Template<span></span></a>
-                    </li>
-
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.incident"><i class="fa fa-exclamation-triangle fa-fw"></i> Incident Report
-                            Template<span></span></a>
-                    </li>
-
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.idea"><i class="fa fa-lightbulb-o fa-fw"></i> Idea Report
-                            Template<span></span></a>
-                    </li>
-
-                    <li ui-sref-active="active">
-                        <a ui-sref="dashboard.qualityDeviation"><i class="fa fa-file-text fa-fw"></i> Quality Deviation
-                            Report Template <span></span></a>
-                    </li>
-
-                </ul>
-                <!-- /.nav-second-level -->
-            </li>
-
-
             <li ng-class="{active: collapseVar==1}">{{dropDown}}
                 <a href="" ng-click="check(1)"><i class="fa fa-pencil-square fa-fw"></i> Fill New Report<span
                         class="fa arrow"></span></a>
@@ -80,6 +51,37 @@
                 </ul>
                 <!-- /.nav-second-level -->
             </li>
+
+            <li ng-class="{active: collapseVar==2}">{{dropDown}}
+                <a href="" ng-click="check(2)"><i class="fa fa fa-eye fa-fw"></i> Preview Report Template<span
+                        class="fa arrow"></span></a>
+                <ul class="nav nav-second-level" collapse="collapseVar!=2">
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.nearmiss"><i class="fa fa-exclamation-circle fa-fw"></i> Nearmiss Report
+                            Template<span></span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.incident"><i class="fa fa-exclamation-triangle fa-fw"></i> Incident Report
+                            Template<span></span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.idea"><i class="fa fa-lightbulb-o fa-fw"></i> Idea Report
+                            Template<span></span></a>
+                    </li>
+
+                    <li ui-sref-active="active">
+                        <a ui-sref="dashboard.qualityDeviation"><i class="fa fa-file-text fa-fw"></i> Quality Deviation
+                            Report Template <span></span></a>
+                    </li>
+
+                </ul>
+                <!-- /.nav-second-level -->
+            </li>
+
+
+
         </ul>
     </div>
     <!-- /.sidebar-collapse -->

@@ -8,14 +8,20 @@
     <!-- /.col-lg-12 -->
 </div>
 
+    <div class="flash-message; col-lo-8" ng-if="flash">
+        <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+    </div>
+
 
 <div class="container">
-<div class="col-md-6 col-md-offset-2">
+<div class="col-md-8 col-md-offset-2">
     <form name="form">
     <div class="panel panel-primary animated fadeInLeft">
         <div class="panel-heading">
             <h4 class="panel-title">Your Profile</h4>
         </div>
+
+
         <div class="panel-body" style="overflow:auto;">
             <form method="post">
                 <div class="form-group">
@@ -40,8 +46,8 @@
                 </div>
 
                 <div>
-                    <button type="button" class="btn btn-primary btn-success" ng-click="vm.updateUser()" ng-disabled="form.$invalid">Update</button>
-                    <button type="button" style="float: right" class="btn btn-danger" ng-click="vm.deleteUser()">Delete</button>
+                    <button type="button" class="btn btn-primary btn-success btn-block" ng-click="vm.updateUser()" ng-disabled="form.$invalid">Update</button>
+                   <!-- <button type="button" style="float: right" class="btn btn-danger" ng-click="vm.deleteUser()">Delete</button>-->
                 </div>
             </form>
         </div>
