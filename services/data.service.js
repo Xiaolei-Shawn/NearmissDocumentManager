@@ -150,6 +150,46 @@ var dataService = {
     	return deferred.promise;
 	},
 
+	updateReport: function(targetReport, reportid) {
+	    var deferred = Q.defer();
+	    reporteCollection.findOne({reportid: reportid}, function (err, targetReport) {
+	        if (err) deferred.reject(err);
+
+	        if (targetReport) {
+	            targetReportCollection.findAndModify(
+	            	{ targetReportid : targetReport.targetReportid }, 
+	            	{ $set : targetReport }, 
+	            	function (updateErr, targetReport) {
+			        if (err) deferred.reject(updateErr);
+
+			        if (targetReport) {
+			            deferred.resolve(targetReport);
+			        } else {
+			            deferred.resolve();
+			        }
+		    	});
+	        } else {
+	            // template not found
+	            deferred.resolve();
+	        }
+    	});
+    	
+
+    	return deferred.promise;
+	},
+	 
+	deleteReport: function(id) {
+	    var deferred = Q.defer();
+
+    	targetReportCollection.remove({targetReportid: id}, function (err) {
+	        if (err) deferred.reject(err);
+
+	        deferred.resolve(true);
+    	});
+
+    	return deferred.promise;
+	},
+
 	findUser: function(email, telephone){
 		var deferred = Q.defer();
 

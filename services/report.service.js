@@ -38,6 +38,30 @@ var report = {
          })
          .done();
     
+    },
+    update: function(req, res) {
+    var report = req.body;
+    var reportid = req.params.id;
+    //Update specific report in db
+    dataService.updateReport(report, reportid)
+      .then(function(report){
+        res.json({"STATUS": "200 OK"});
+    })
+    .catch(function(err){
+        res.json(err);
+    });
+    },
+   
+    delete: function(req, res) {
+      var id = req.params.id;
+      //Delete specific report from bd
+      dataService.deleteReport(id)
+        .then(function(report){
+          res.json({"STATUS": "200 OK"});
+      })
+      .catch(function(err){
+          res.json(err);
+      });
     }
 };
 

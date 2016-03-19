@@ -25,7 +25,7 @@ app.use('/login', require('./controllers/login.controller'));
 app.use('/register', require('./controllers/register.controller'));
 app.use('/app', require('./controllers/app.controller'));
 app.use('/api/users', require('./controllers/api/users.controller'));
-app.use('/api/reports', require('./controllers/report.controller'));
+app.use('/api/resouces', require('./controllers/report.controller'));
 
 //All rest api need  to be checked for token
 app.all('/mapi/*', [require('./middlewares/validateRequest')])

@@ -4,11 +4,10 @@ var template = require('services/template.service');
 var report = require('services/report.service');
 var auth = require('services/auth.service');
 
-//Mobile api
-
+//Mobile user requests for token 
 router.post('/mlogin', auth.login);
 
-router.get('/template/:id', template.getOne);
+//Common api
 
 router.post('/report/', report.create);
 
@@ -16,14 +15,20 @@ router.get('/reports/', report.getAll);
 
 router.get('/report/:id', report.getOne);
 
-//Only for angular usage
+router.get('/template/:id', template.getOne);
 
-router.get('/web/templates', template.getAll);
+router.get('/templates', template.getAll);
 
-router.post('/web/template/', template.create);
+router.post('/template/', template.create);
 
-router.put('/web/template/:id', template.update);
+//Only for angular usage. Can't be accessed from mobile
 
-router.delete('/web/template/:id', template.delete);
+router.put('/template/:id', template.update);
+
+router.delete('/template/:id', template.delete);
+
+router.put('/report/:id', report.update);
+
+router.delete('/report/:id', report.delete);
 
 module.exports = router;

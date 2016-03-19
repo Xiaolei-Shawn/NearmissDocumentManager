@@ -11,8 +11,8 @@ module.exports = function(req, res, next) {
   // We skip the token outh for [OPTIONS] requests.
   //if(req.method == 'OPTIONS') next();
 
-  //Querying web data is not allowed from mobile
-  if (S(req.url).contains('web')) {
+  //Deleting&Updating template and deleting report are not allowed from mobile
+  if ((req.method === 'PUT' && S(req.url).contains('template')) || req.method === 'DELETE') {
           res.status(401);
           res.json({
             "status": 401,
