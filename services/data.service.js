@@ -110,13 +110,16 @@ var dataService = {
     	return deferred.promise;
 	},
 	 
-	updateTemplate: function(template, id) {
+	updateTemplate: function(template, templateid) {
 	    var deferred = Q.defer();
-	    templateCollection.findOne({templateid: id}, function (err, template) {
+	    templateCollection.findOne({templateid: templateid}, function (err, targetTemplate) {
 	        if (err) deferred.reject(err);
 
-	        if (template) {
-	            templateCollection.update({_id: template._id}, template, function (updateErr, updatedTemplate) {
+	        if (targetTemplate) {
+	            templateCollection.findAndModify(
+	            	{ templateid : targetTemplate.templateid }, 
+	            	{ $set : template }, 
+	            	function (updateErr, updatedTemplate) {
 			        if (err) deferred.reject(updateErr);
 
 			        if (updatedTemplate) {

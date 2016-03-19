@@ -40,10 +40,10 @@ var template = {
   },
  
   update: function(req, res) {
-    var updateTemplate = req.body;
-    var id = req.params.id;
+    var template = req.body;
+    var templateid = req.params.id;
     //Update specific template in db
-    dataService.updateTemplate(template, id)
+    dataService.updateTemplate(template, templateid)
       .then(function(template){
         res.json({"STATUS": "200 OK"});
     })
