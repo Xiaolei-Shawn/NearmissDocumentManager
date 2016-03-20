@@ -112,23 +112,9 @@ var auth = {
  
 // private method
 function genToken(user) {
-  var expires = expiresInSecond(3600);
-  var token = jwt.sign({user: user, exp: expires}, config.secret, {expiresIn : 3600});
+  var token = jwt.sign({user: user}, config.secret, {expiresIn : 60 * 60 * 2});
   return token;
 
-}
- 
-function expiresInDay(numDays) {
-  var dateObj = new Date();
-  return dateObj.setDate(dateObj.getDate() + numDays);
-}
-function expiresInHour(numHours) {
-  var dateObj = new Date();
-  return dateObj.setHours(dateObj.getHours() + numHours);
-}
-function expiresInSecond(numSeconds) {
-  var dateObj = new Date();
-  return dateObj.setSeconds(dateObj.getSeconds() + numSeconds);
 }
  
 module.exports = auth;
