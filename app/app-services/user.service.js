@@ -35,7 +35,7 @@
         }
 
         function Create(user) {
-            return $http.post('/api/users/', user).then(handleSuccess, handleError);
+            return $http.post('/api/users/create', user).then(handleSuccess, handleError);
         }
 
         function Update(user) {

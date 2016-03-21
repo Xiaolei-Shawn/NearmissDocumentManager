@@ -6,6 +6,7 @@ var userService = require('services/user.service');
 // routes
 router.post('/authenticate', authenticateUser);
 router.post('/register', registerUser);
+router.post('/create', createUser);
 router.get('/current', getCurrentUser);
 router.put('/:_id', updateUser);
 router.delete('/:_id', deleteUser);
@@ -28,7 +29,20 @@ function authenticateUser(req, res) {
         });
 }
 
+//Register an admin user that has role 'administrator'
 function registerUser(req, res) {
+    userService.create(req.body)
+        .then(function () {
+            res.sendStatus(200);
+        })
+        .catch(function (err) {
+            res.status(400).send(err);
+        });
+}
+
+//Create a normal user for mobile that has role 'user'
+function createUser(req, res) {
+    console.log("Create user for mobile: " + req.body.role);
     userService.create(req.body)
         .then(function () {
             res.sendStatus(200);
