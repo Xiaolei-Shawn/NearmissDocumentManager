@@ -42,7 +42,6 @@ function registerUser(req, res) {
 
 //Create a normal user for mobile that has role 'user'
 function createUser(req, res) {
-    console.log("Create user for mobile: " + req.body.role);
     userService.create(req.body)
         .then(function () {
             res.sendStatus(200);
