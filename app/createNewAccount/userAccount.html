@@ -7,6 +7,10 @@
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<div class="flash-message; col-lo-8" ng-if="flash">
+    <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+</div>
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-6 col-md-offset-2">
@@ -18,7 +22,7 @@
             <div class="panel-body", style="overflow:auto;">
                 <form name="form" novalidate>
                     <formly-form model="vm.model" fields="vm.fields" options="vm.options">
-                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid" ng-click="vm.createAccount()">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid ||  vm.buttonDisabled" ng-click="vm.createAccount()">Submit</button>
                     </formly-form>
                 </form>
             </div>

@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Nearmiss report Template</h1>
+        <h1 class="page-header">Report Templates</h1>
         <blockquote>
-            <p>Preview the report template and press 'Submit' button, the report template
+            <p>Please select the type of report template you would like to create, then click the check box to select the fields. After that, press 'Submit' button, the report template
                 format will be saved.</p>
         </blockquote>
     </div>
@@ -18,12 +18,12 @@
 
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h4 class="panel-title">Nearmiss report template</h4>
+                <h4 class="panel-title">Report Template</h4>
             </div>
             <div class="panel-body" , style="overflow:auto;">
                 <form name="form" novalidate>
                     <formly-form model="vm.model" fields="vm.fields" options="vm.options">
-                        <button type="submit" class="btn btn-primary btn-block" ng-click="vm.createTemplate()">Submit
+                        <button type="submit" class="btn btn-primary btn-block" ng-click="vm.createTemplate() || vm.buttonDisabled">Submit
                         </button>
                     </formly-form>
                 </form>

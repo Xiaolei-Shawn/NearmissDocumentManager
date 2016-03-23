@@ -26,7 +26,8 @@
                 templateOptions: {
                     type: 'text',
                     label: 'Company',
-                    placeholder: 'Enter your Company'
+                    placeholder: 'Enter your Company',
+                    required:true
                 }
             },
             {
@@ -35,7 +36,8 @@
                 templateOptions: {
                     type: 'text',
                     label: 'Full name',
-                    placeholder: 'Enter your full name'
+                    placeholder: 'Enter your full name',
+                    required:true
 
                 }
             },
@@ -45,7 +47,8 @@
                 templateOptions: {
                     type: 'text',
                     label: 'Department',
-                    placeholder: 'Enter your department'
+                    placeholder: 'Enter your department',
+                    required:true
                 }
             },
             {
@@ -53,7 +56,8 @@
                 type: 'input',
                 templateOptions: {
                     label: 'Phone number',
-                    placeholder: 'Enter your phone number'
+                    placeholder: 'Enter your phone number',
+                    required:true
                 }
             },
             {
@@ -62,7 +66,8 @@
                 templateOptions: {
                     type: 'email',
                     label: 'Email',
-                    placeholder: 'Enter your Email'
+                    placeholder: 'Enter your Email',
+                    required:true
                 }
             },
 

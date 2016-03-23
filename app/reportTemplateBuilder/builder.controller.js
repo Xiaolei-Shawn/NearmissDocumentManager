@@ -7,8 +7,9 @@
 
         .controller('BuilderCtrl', Controller);
 
-    function Controller($scope) {
+    function Controller( $window,$scope, ReportTemplateService, FlashService) {
         $scope.newField = {};
+        $scope.buttonDisabled = false;
         $scope.fields = [ {
             type : 'text',
             name : 'Report Template Name',
@@ -66,7 +67,19 @@
             if (type == 'radio')
                 return 'multiple';
             return type;
+        };
+
+        $scope.createTemplate = function() {
+            ReportTemplateService.CreateNewTemplate($scope.newField)
+                .then(function () {
+                    FlashService.Success('The template has been successfully created !');
+                    $window.location = '/#/home';
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
         }
+
     }
 
 

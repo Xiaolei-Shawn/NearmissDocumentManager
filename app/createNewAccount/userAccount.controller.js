@@ -12,11 +12,9 @@
         vm.createAccount = createAccount;
         vm.model = {};
         vm.options = {};
+        vm.buttonDisabled = false;
 
 
-        // An array of our form fields with configuration
-        // and options set. We make reference to this in
-        // the 'fields' attribute on the <formly-form> element
         vm.fields = [
             {
                 key: 'firstname',
@@ -54,8 +52,7 @@
                 templateOptions: {
                     type: 'email',
                     label: 'Email',
-                    placeholder: 'Enter your Email',
-                    required:true
+                    placeholder: 'Enter your Email'
                 }
             },
             {
@@ -76,7 +73,10 @@
             vm.model.role = 'user';
             UserService.Create(vm.model)
                 .then(function () {
-                    FlashService.Success('Account created');
+                    FlashService.Success('The new account has been successfully created !');
+                    vm.buttonDisabled = true;
+
+                    // $window.location = '/#/home';
                 })
                 .catch(function (error) {
                     FlashService.Error(error);

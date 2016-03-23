@@ -5,11 +5,13 @@
         .module('app')
         .controller('ProfileCtrl', Controller);
 
-    function Controller($window, UserService, FlashService) {
+    function Controller($location,UserService, FlashService) {
         var vm = this;
         vm.user = null;
         vm.updateUser = updateUser;
-        vm.deleteUser = deleteUser;
+        vm.buttonDisabled = false;
+
+       // vm.deleteUser = deleteUser;
 
         initController();
 
@@ -23,8 +25,9 @@
         function updateUser() {
             UserService.Update(vm.user)
                 .then(function () {
-                    FlashService.Success('Your profile has been updated!');
-                  //  $window.location = '/#/home';
+                    FlashService.Success('Your profile has been updated !');
+                    vm.buttonDisabled = true;
+                   // $location.path ('/#/home');
 
                 })
                 .catch(function (error) {
@@ -32,16 +35,16 @@
                 });
         }
 
-        function deleteUser() {
+/*        function deleteUser() {
             UserService.Delete(vm.user._id)
                 .then(function () {
                     // log user out
-                    $window.location = '/#/home';
+                    $location.path ('');
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
                 });
-        }
+        }*/
 
     }
 

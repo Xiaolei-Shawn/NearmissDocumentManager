@@ -81,3 +81,7 @@ body {
 text-decoration: none;
 background-color: #eee;
 }
+
+.flash-message {
+  margin-top: 20px;
+}

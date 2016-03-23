@@ -19,7 +19,7 @@
         }
 
           function CreateNewReport(report) {
-            return $http.put('/api/resources/report/' + report).then(handleSuccess, handleError);
+            return $http.put('/api/resources/report/', report).then(handleSuccess, handleError);
         }
 
 
