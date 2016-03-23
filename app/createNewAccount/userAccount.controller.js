@@ -57,13 +57,24 @@
                     placeholder: 'Enter your Email',
                     required:true
                 }
+            },
+            {
+              key: 'password',
+              type: 'input',
+              templateOptions: {
+                type: 'password',
+                label: 'Password',
+                placeholder: 'Password',
+                required:true
+              }
             }
 
 
         ];
 
         function createAccount() {
-            UserService.Create(vm.fields)
+            vm.model.role = 'user';
+            UserService.Create(vm.model)
                 .then(function () {
                     FlashService.Success('Account created');
                 })
