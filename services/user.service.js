@@ -15,6 +15,7 @@ service.getById = getById;
 service.create = create;
 service.update = update;
 service.delete = _delete;
+service.updatePassword = updatePassword;
 module.exports = service;
 
 function authenticate(email, password) {
@@ -158,6 +159,61 @@ function _delete(_id) {
 
             deferred.resolve();
         });
+
+    return deferred.promise;
+}
+
+function updatePassword(_id, userParam) {
+    var deferred = Q.defer();
+
+    // validation
+    usersDb.findById(_id, function (err, user) {
+        if (err) deferred.reject(err);
+
+        updateUserPassword(user);
+        
+    });
+
+    function updateUserPassword(user) {
+        // fields to update
+        var set = {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            phoneNumber: user.phoneNumber
+        };
+        if(!userParam.oldPassword){
+            deferred.reject({
+                err: 'Missing old password'
+            }); 
+            return deferred.promise;
+        }
+
+        if(!userParam.hasOwnProperty("newPassword")){
+            deferred.reject({
+                err: 'Missing new password'
+            }); 
+            return deferred.promise;
+        }
+
+        // update password if it was entered
+        if(bcrypt.compareSync(userParam.oldPassword, user.hash)){
+            set.hash = bcrypt.hashSync(userParam.newPassword, 10);
+        } else {
+            deferred.reject({
+                err: 'Old password mis-match'
+            });
+        }
+            
+        usersDb.findAndModify(
+            { _id: _id },
+            { $set: set },
+            function (err, doc) {
+                if (err) deferred.reject(err);
+
+                deferred.resolve();
+            });
+    }
 
     return deferred.promise;
 }

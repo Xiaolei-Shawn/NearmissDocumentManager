@@ -2,6 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var userService = require('services/user.service');
+var JSON = require('JSON');
 
 // routes
 router.post('/authenticate', authenticateUser);
@@ -10,6 +11,7 @@ router.post('/create', createUser);
 router.get('/current', getCurrentUser);
 router.put('/:_id', updateUser);
 router.delete('/:_id', deleteUser);
+router.put('/update/:_id', updatePassword);
 
 module.exports = router;
 
@@ -52,6 +54,7 @@ function createUser(req, res) {
 }
 
 function getCurrentUser(req, res) {
+    console.log("req: " + JSON.stringify(req.user));
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {
@@ -94,5 +97,21 @@ function deleteUser(req, res) {
         })
         .catch(function (err) {
             res.status(400).send(err);
-        });
+    });
+}
+
+function updatePassword(req, res){
+    var userid = req.params._id;
+    userService.updatePassword(userid, req.body)
+        .then(function() {
+            res.sendStatus(200)
+            .send({
+                "status": 200,
+                "message": "Update password successfullly."
+            });
+        })
+        .catch(function(err) {
+            res.status(400)
+                .send(err);
+        })
 }

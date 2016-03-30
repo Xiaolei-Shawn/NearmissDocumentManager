@@ -26,14 +26,15 @@ var auth = {
             .then(function(allTemplates){
               res.json( {
                 token: genToken(user),
-                user: _.omit(user, ['hash', '_id']),
+                user: user,
                 //templates: _.map(allTemplates, _.property('templateid'))
-                templateinfo: _.map(allTemplates, function(template){
+                /*templateinfo: _.map(allTemplates, function(template){
                   return {
                     templatename: template.name,
                     templateid: template.templateid
                   }
-                })
+                })*/
+              templates: allTemplates
               });
               return;
             })
@@ -63,14 +64,15 @@ var auth = {
             .then(function(allTemplates){
               res.json( {
                 token: genToken(user),
-                user: _.omit(user, ['hash', '_id']),
+                user: user,
                 //templates: _.map(allTemplates, _.property('templateid'))
-                templateinfo: _.map(allTemplates, function(template){
+                /*templateinfo: _.map(allTemplates, function(template){
                   return {
                     templatename: template.name,
                     templateid: template.templateid
                   }
-                })
+                })*/
+                templates: allTemplates
               });
               return;
             })

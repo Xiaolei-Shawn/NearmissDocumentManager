@@ -4,9 +4,9 @@ var _ = require('lodash');
 var template = {
  
   getOne: function(req, res) {
-    var id = req.params.id;
+    var _id = req.params._id;
 
-    dataService.getOneTemplate(id)
+    dataService.getOneTemplate(_id)
       .then(function(template){
         res.json(template);
     })
@@ -41,9 +41,9 @@ var template = {
  
   update: function(req, res) {
     var template = req.body;
-    var templateid = req.params.id;
+    var _id = req.params._id;
     //Update specific template in db
-    dataService.updateTemplate(template, templateid)
+    dataService.updateTemplate(template, _id)
       .then(function(template){
         res.json({"STATUS": "200 OK"});
     })
@@ -53,9 +53,9 @@ var template = {
   },
  
   delete: function(req, res) {
-    var id = req.params.id;
+    var _id = req.params._id;
     //Delete specific template from bd
-    dataService.deleteTemplate(id)
+    dataService.deleteTemplate(_id)
       .then(function(template){
         res.json({"STATUS": "200 OK"});
     })

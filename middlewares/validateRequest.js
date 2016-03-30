@@ -12,13 +12,33 @@ module.exports = function(req, res, next) {
   //if(req.method == 'OPTIONS') next();
 
   //Deleting&Updating template and deleting report are not allowed from mobile
-  if ((req.method === 'PUT' && S(req.url).contains('template')) || req.method === 'DELETE') {
-          res.status(401);
-          res.json({
-            "status": 401,
-            "message": "Unaccessable path from mobile"
-          });
-          return;
+  
+  if(req.url.indexOf('users') >= 0){
+      if (req.method !== 'GET' && req.method !== 'PUT') {
+              res.status(401);
+              res.json({
+                "status": 401,
+                "message": "Unaccessable path from mobile"
+              });
+              return;
+      }
+  } else if (req.url.indexOf('resources') >= 0){
+      console.log("url : " + req.uerl + " " + req.url.indexOf('mlogin') < 0);
+      if (req.url.indexOf('mlogin') < 0 && ((req.method === 'PUT' && S(req.url).contains('template')) || req.method === 'DELETE')) {
+              res.status(401);
+              res.json({
+                "status": 401,
+                "message": "Unaccessable path from mobile"
+              });
+              return;
+      }
+  } else {
+      res.status(404);
+        res.json({
+          "status": 404,
+          "message": "Nonexistent path"
+        });
+        return;
   }
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token'];
   var key = (req.body && req.body.x_key) || (req.query && req.query.x_key) || req.headers['x-key'];

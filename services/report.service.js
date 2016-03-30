@@ -18,9 +18,9 @@ var report = {
 	},
 
     getOne : function(req, res){
-        var id = req.params.id;
+        var _id = req.params._id;
 
-        dataService.getOneReport(id)
+        dataService.getOneReport(_id)
           .then(function(report){
             res.json(report);
         })
@@ -41,9 +41,9 @@ var report = {
     },
     update: function(req, res) {
     var report = req.body;
-    var reportid = req.params.id;
+    var _id = req.params._id;
     //Update specific report in db
-    dataService.updateReport(report, reportid)
+    dataService.updateReport(report, _id)
       .then(function(report){
         res.json({"STATUS": "200 OK"});
     })
@@ -53,9 +53,9 @@ var report = {
     },
    
     delete: function(req, res) {
-      var id = req.params.id;
+      var _id = req.params._id;
       //Delete specific report from bd
-      dataService.deleteReport(id)
+      dataService.deleteReport(_id)
         .then(function(report){
           res.json({"STATUS": "200 OK"});
       })

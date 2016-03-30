@@ -11,14 +11,14 @@ var bcrypt = require('bcryptjs');
 var Q = require('q');
 
 var dataService = {
-	getOneTemplate: function(id){
+	getOneTemplate: function(_id){
 		var deferred = Q.defer();
 
-    	templateCollection.findOne({templateid: id}, function (err, template) {
+    	templateCollection.findOne({_id: _id}, function (err, template) {
 	        if (err) deferred.reject(err);
 
 	        if (template) {
-	            deferred.resolve(_.omit(template, ['_id', 'hash']));
+	            deferred.resolve(_.omit(template, '_hash'));
 	        } else {
 	            // template not found
 	            deferred.resolve();
@@ -28,12 +28,12 @@ var dataService = {
     	return deferred.promise;
 	},
 
-	getOneReport: function(id){
+	getOneReport: function(_id){
 		var deferred = Q.defer();
-    	reportCollection.findOne({reportid: id}, function (err, report) {
+    	reportCollection.findOne({_id: _id}, function (err, report) {
 	        if (err) deferred.reject(err);
 	        if (report) {
-	            deferred.resolve(_.omit(report, ['_id', 'hash']));
+	            deferred.resolve(_.omit(report, 'hash'));
 	        } else {
 	            // report not found
 	            deferred.resolve();
@@ -110,14 +110,14 @@ var dataService = {
     	return deferred.promise;
 	},
 	 
-	updateTemplate: function(template, templateid) {
+	updateTemplate: function(template, _id) {
 	    var deferred = Q.defer();
-	    templateCollection.findOne({templateid: templateid}, function (err, targetTemplate) {
+	    templateCollection.findById({_id: _id}, function (err, targetTemplate) {
 	        if (err) deferred.reject(err);
 
 	        if (targetTemplate) {
 	            templateCollection.findAndModify(
-	            	{ templateid : targetTemplate.templateid }, 
+	            	{ _id : targetTemplate._id }, 
 	            	{ $set : template }, 
 	            	function (updateErr, updatedTemplate) {
 			        if (err) deferred.reject(updateErr);
@@ -138,10 +138,10 @@ var dataService = {
     	return deferred.promise;
 	},
 	 
-	deleteTemplate: function(id) {
+	deleteTemplate: function(_id) {
 	    var deferred = Q.defer();
 
-    	templateCollection.remove({templateid: id}, function (err) {
+    	templateCollection.remove({_id: _id}, function (err) {
 	        if (err) deferred.reject(err);
 
 	        deferred.resolve(true);
@@ -150,14 +150,14 @@ var dataService = {
     	return deferred.promise;
 	},
 
-	updateReport: function(targetReport, reportid) {
+	updateReport: function(targetReport, _id) {
 	    var deferred = Q.defer();
-	    reporteCollection.findOne({reportid: reportid}, function (err, targetReport) {
+	    reporteCollection.findById({_id: _id}, function (err, targetReport) {
 	        if (err) deferred.reject(err);
 
 	        if (targetReport) {
 	            targetReportCollection.findAndModify(
-	            	{ targetReportid : targetReport.targetReportid }, 
+	            	{ _id : targetReport._id }, 
 	            	{ $set : targetReport }, 
 	            	function (updateErr, targetReport) {
 			        if (err) deferred.reject(updateErr);
@@ -178,10 +178,10 @@ var dataService = {
     	return deferred.promise;
 	},
 	 
-	deleteReport: function(id) {
+	deleteReport: function(_id) {
 	    var deferred = Q.defer();
 
-    	targetReportCollection.remove({targetReportid: id}, function (err) {
+    	targetReportCollection.remove({_id: _id}, function (err) {
 	        if (err) deferred.reject(err);
 
 	        deferred.resolve(true);
@@ -233,7 +233,7 @@ var dataService = {
 			        if (err) deferred.reject(err);
 
 			        if (user && bcrypt.compareSync(password, user.hash)) {
-			            deferred.resolve(_.omit(user, 'hash'));
+			            deferred.resolve(user);
 			        } else {
 			            deferred.resolve();
 			        }
@@ -243,7 +243,7 @@ var dataService = {
 			        if (err) deferred.reject(err);
 
 			        if (user && bcrypt.compareSync(password, user.hash)) {
-			            deferred.resolve(_.omit(user, 'hash'));
+			            deferred.resolve(user);
 			        } else {
 			            deferred.resolve();
 			        }
