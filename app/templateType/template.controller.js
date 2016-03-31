@@ -15,6 +15,7 @@
         vm.model = {};
         vm.options = {};
         vm.buttonDisabled = false;
+        vm.createTemplate = createTemplate;
 
         // An array of our form fields with configuration
         // and options set. We make reference to this in
@@ -45,7 +46,7 @@
                 "templateOptions": {
                     "label": "Company"
                 },
-                hideExpression: '!model.templateType',
+                hideExpression: '!model.templateType'
             },
             {
                 "type": "checkbox",
@@ -137,7 +138,7 @@
             }
 
         ];
-        vm.createTemplate = createTemplate;
+
 
 
 

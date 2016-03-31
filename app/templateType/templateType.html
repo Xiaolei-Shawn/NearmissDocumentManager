@@ -20,7 +20,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">Report Template</h4>
             </div>
-            <div class="panel-body" , style="overflow:auto;">
+            <div class="panel-body"  style="overflow:auto;">
                 <form name="form" novalidate>
                     <formly-form model="vm.model" fields="vm.fields" options="vm.options">
                         <button type="submit" class="btn btn-primary btn-block" ng-click="vm.createTemplate() || vm.buttonDisabled">Submit
@@ -29,24 +29,5 @@
                 </form>
             </div>
         </div>
-        <!--        &lt;!&ndash; /.panel &ndash;&gt;
-                <script type="text/ng-template" id="datepicker.html">
-                    <p class="input-group">
-                        <input  type="text"
-                                id="{{::id}}"
-                                name="{{::id}}"
-                                ng-model="model[options.key]"
-                                class="form-control"
-                                ng-click="datepicker.open($event)"
-                                uib-datepicker-popup="{{to.datepickerOptions.format}}"
-                                is-open="datepicker.opened"
-                                datepicker-options="to.datepickerOptions" />
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="datepicker.open($event)" ng-disabled="to.disabled"><i class="glyphicon glyphicon-calendar"></i></button>
-                </span>
-                    </p>
-                </script>-->
-
-
     </div>
 </div>

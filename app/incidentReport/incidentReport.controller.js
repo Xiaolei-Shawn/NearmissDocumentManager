@@ -6,7 +6,7 @@
         .module('app')
         .controller('IncidentCtrl', Controller);
 
-    function Controller() {
+    function Controller(ReportTemplateService, FlashService) {
 
         var vm = this;
 
@@ -14,6 +14,8 @@
         // on the <formly-form> element in index.html
         vm.model = {};
         vm.options = {};
+        vm.buttonDisabled = false;
+        vm.createReport = createReport;
 
 
         // An array of our form fields with configuration
@@ -171,6 +173,16 @@
 
         ];
 
+        function createReport() {
+            ReportTemplateService.CreateNewReport(vm.model)
+                .then(function () {
+                    FlashService.Success('The incident report has been submitted successfully!');
+                    vm.buttonDisabled = true;
+                })
+                .catch(function (error) {
+                    FlashService.Error(error);
+                });
+        }
     }
 
 })();

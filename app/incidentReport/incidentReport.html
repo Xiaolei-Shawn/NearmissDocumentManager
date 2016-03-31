@@ -1,13 +1,17 @@
 <div class="row">
     <div class="col-lg-12">
-        <h1 class="page-header">Incident report Template</h1>
+        <h1 class="page-header">Incident Report</h1>
         <blockquote>
-            <p>Preview the report template and press 'Submit' button, the report template
-                format will be saved</p>
+            <p>Fill the report and press 'Submit' button, after that, the report will be saved</p>
         </blockquote>
     </div>
     <!-- /.col-lg-12 -->
 </div>
+
+<div class="flash-message; col-lo-8" ng-if="flash">
+    <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+</div>
+
 <!-- /.row -->
 <div class="row">
     <div class="col-lg-6 col-md-offset-2">
@@ -19,7 +23,7 @@
             <div class="panel-body", style=" height:700px; overflow:auto;">
                 <form name="form" novalidate>
                     <formly-form model="vm.model" fields="vm.fields" options="vm.options">
-                        <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-block" ng-click="vm.createReport()" ng-disabled="form.$invalid ||  vm.buttonDisabled">Submit</button>
                     </formly-form>
                 </form>
             </div>

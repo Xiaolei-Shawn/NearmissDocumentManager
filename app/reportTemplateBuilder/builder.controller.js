@@ -7,9 +7,9 @@
 
         .controller('BuilderCtrl', Controller);
 
-    function Controller( $window,$scope, ReportTemplateService, FlashService) {
-        $scope.newField = {};
+    function Controller($window, $scope, ReportTemplateService, FlashService) {
         $scope.buttonDisabled = false;
+        $scope.newField = {};
         $scope.fields = [ {
             type : 'text',
             name : 'Report Template Name',
@@ -29,6 +29,7 @@
         };
         $scope.saveField = function() {
             console.log("entered save");
+            console.log("field" + $scope.fields);
             if ($scope.newField.type == 'checkboxes') {
                 $scope.newField.value = {};
             }
@@ -70,10 +71,10 @@
         };
 
         $scope.createTemplate = function() {
-            ReportTemplateService.CreateNewTemplate($scope.newField)
+            ReportTemplateService.CreateNewTemplate($scope.fields)
                 .then(function () {
                     FlashService.Success('The template has been successfully created !');
-                    $window.location = '/#/home';
+                    $scope.buttonDisabled = true;
                 })
                 .catch(function (error) {
                     FlashService.Error(error);
