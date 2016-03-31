@@ -24,27 +24,28 @@ var auth = {
         .then(function(user){
             dataService.getAllTemplates()
             .then(function(allTemplates){
+              res.status(200);
               res.json( {
                 token: genToken(user),
                 user: user,
                 //templates: _.map(allTemplates, _.property('templateid'))
-                /*templateinfo: _.map(allTemplates, function(template){
+                templateinfo: _.map(allTemplates, function(template){
                   return {
-                    templatename: template.name,
-                    templateid: template.templateid
+                    templatename: template.title,
+                    templatetype: template.type,
+                    templateid: template._id
                   }
-                })*/
-              templates: allTemplates
+                })
               });
               return;
             })
             .catch(function(err){
+              res.status(401);
               res.json( {
-                token: genToken(user),
-                expires: expires,
-                user: user,
-                templateinfo: err
-              })
+                "status": 401,
+                "message": "Not a valid user",
+                "error": err
+              });
             })
             //res.json(genToken(user));
         })
@@ -52,7 +53,8 @@ var auth = {
             res.status(401);
             res.json({
               "status": 401,
-              "message": "Invalid credentials for given email"
+              "message": "Invalid credentials for given email",
+              "error": err
             });
             return;
         });
@@ -62,34 +64,36 @@ var auth = {
         .then(function(user){
              dataService.getAllTemplates()
             .then(function(allTemplates){
+              res.status(200);
               res.json( {
                 token: genToken(user),
                 user: user,
                 //templates: _.map(allTemplates, _.property('templateid'))
-                /*templateinfo: _.map(allTemplates, function(template){
+                templateinfo: _.map(allTemplates, function(template){
                   return {
-                    templatename: template.name,
-                    templateid: template.templateid
+                    templatename: template.title,
+                    templatetype: template.type,
+                    templateid: template._id
                   }
-                })*/
-                templates: allTemplates
+                })
               });
               return;
             })
             .catch(function(err){
+              res.status(401);
               res.json( {
-                token: genToken(user),
-                expires: expires,
-                user: user,
-                templateinfo: err
-              })
+                "status": 401,
+                "message": "Not a valid user",
+                "error": err
+              });
             })
         })
         .catch(function(err){
             res.status(401);
             res.json({
               "status": 401,
-              "message": "Invalid credentials for given phone number"
+              "message": "Invalid credentials for given phone number",
+              "error": err
             });
             return;
         });

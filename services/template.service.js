@@ -8,9 +8,11 @@ var template = {
 
     dataService.getOneTemplate(_id)
       .then(function(template){
+        res.status(200);
         res.json(template);
     })
     .catch(function(err){
+        res.status(404);
         res.json(err/*{"STATUS": "404 NOT FOUND", "ERROR": err}*/);
     });
   },
@@ -18,10 +20,12 @@ var template = {
  getAll: function(req, res) {
     dataService.getAllTemplates()
      .then(function(allTemplates){
+        res.status(200);
         res.json(allTemplates);
      })
      .catch(function(err){
-        res.json();
+        res.status(404);
+        res.json(err);
      })
      .done();
     
@@ -32,9 +36,11 @@ var template = {
 
     dataService.createTemplate(template)
       .then(function(template){
+        res.status(200);
         res.json({"STATUS": "200 OK"});
     })
     .catch(function(err){
+        res.status(404);
         res.json(err);
     });
   },
@@ -45,9 +51,11 @@ var template = {
     //Update specific template in db
     dataService.updateTemplate(template, _id)
       .then(function(template){
+        res.status(200);
         res.json({"STATUS": "200 OK"});
     })
     .catch(function(err){
+        res.status(404);
         res.json(err);
     });
   },
@@ -57,9 +65,11 @@ var template = {
     //Delete specific template from bd
     dataService.deleteTemplate(_id)
       .then(function(template){
+        res.status(200);
         res.json({"STATUS": "200 OK"});
     })
     .catch(function(err){
+        res.status(404);
         res.json(err);
     });
   }
