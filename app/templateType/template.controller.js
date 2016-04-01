@@ -38,15 +38,23 @@
                 }
 
             },
-
-
+            {
+                key: 'title',
+                type: 'input',
+                templateOptions: {
+                    type: 'text',
+                    label: 'Template Title',
+                    placeholder: 'Input unique template title',
+                    required:true
+                }
+            },
             {
                 "type": "checkbox",
                 "key": "company",
                 "templateOptions": {
                     "label": "Company"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -54,7 +62,7 @@
                 "templateOptions": {
                     "label": "Full Name"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -62,7 +70,7 @@
                 "templateOptions": {
                     "label": "Department"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -70,7 +78,7 @@
                 "templateOptions": {
                     "label": "Phone Number"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -78,7 +86,7 @@
                 "templateOptions": {
                     "label": "Email"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -86,7 +94,7 @@
                 "templateOptions": {
                     "label": "Date"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -94,7 +102,7 @@
                 "templateOptions": {
                     "label": "Time"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -102,7 +110,7 @@
                 "templateOptions": {
                     "label": "Severity Level"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -110,7 +118,7 @@
                 "templateOptions": {
                     "label": "Cause"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -118,7 +126,7 @@
                 "templateOptions": {
                     "label": "Consequences"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -126,7 +134,7 @@
                 "templateOptions": {
                     "label": "Location"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             },
             {
                 "type": "checkbox",
@@ -134,7 +142,7 @@
                 "templateOptions": {
                     "label": "Other Details"
                 },
-                hideExpression: '!model.templateType'
+                hideExpression: '!model.title'
             }
 
         ];

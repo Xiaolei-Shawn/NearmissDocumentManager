@@ -5,7 +5,7 @@
         .module('app')
         .controller('ProfileCtrl', Controller);
 
-    function Controller($location,UserService, FlashService) {
+    function Controller(UserService, FlashService) {
         var vm = this;
         vm.user = null;
         vm.updateUser = updateUser;
@@ -27,7 +27,6 @@
                 .then(function () {
                     FlashService.Success('Your profile has been updated !');
                     vm.buttonDisabled = true;
-                   // $location.path ('/#/home');
 
                 })
                 .catch(function (error) {
