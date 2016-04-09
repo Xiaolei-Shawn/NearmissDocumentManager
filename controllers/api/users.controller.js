@@ -54,7 +54,6 @@ function createUser(req, res) {
 }
 
 function getCurrentUser(req, res) {
-    console.log("req: " + JSON.stringify(req.user));
     userService.getById(req.user.sub)
         .then(function (user) {
             if (user) {

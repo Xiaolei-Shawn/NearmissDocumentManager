@@ -23,7 +23,6 @@ module.exports = function(req, res, next) {
               return;
       }
   } else if (req.url.indexOf('resources') >= 0){
-      console.log("url : " + req.uerl + " " + req.url.indexOf('mlogin') < 0);
       if (req.url.indexOf('mlogin') < 0 && ((req.method === 'PUT' && S(req.url).contains('template')) || req.method === 'DELETE')) {
               res.status(401);
               res.json({

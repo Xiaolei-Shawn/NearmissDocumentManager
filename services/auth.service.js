@@ -24,6 +24,33 @@ var auth = {
       
       dataService.validateUser(username, null, password)
         .then(function(user){
+          Q.all([dataService.getAllTemplates(), dataService.getAllReports()])
+          .then(function(data){
+               res.status(200);
+               res.json({
+                token: genToken(user),
+                user: user,
+                //templates: _.map(allTemplates, _.property('templateid'))
+                templates: _.map(data[0], function(template){
+                              return {
+                                title: template.title,
+                                type: template.type,
+                                _id: template._id
+                              }
+                            }),
+                reports: _.map(data[1], function(report){
+                              return {
+                                title: report.title,
+                                type: report.type,
+                                _id: report._id
+                              }
+                            }),
+              });
+          })
+          .catch(function(err){
+            console.log("getAllTemplates or getAllReports goes wrong");
+          })
+          /**
           dataService.getAllTemplates()
             .then(function(allTemplates){
                 dataService.getAllReports()
@@ -76,6 +103,7 @@ var auth = {
                 });
             })
             //res.json(genToken(user));
+            **/
         })
         .catch(function(err){
             res.status(401);
@@ -149,13 +177,6 @@ function genToken(user) {
   var token = jwt.sign({user: user}, config.secret, {expiresIn : 60 * 60 * 2});
   return token;
 
-}
-
-function queryTemplatesAndReports(){
-  return Q.all([
-              dataService.getAllTemplates(),
-              dataService.getAllReports()
-            ]);
 }
  
 module.exports = auth;

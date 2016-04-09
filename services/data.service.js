@@ -89,7 +89,6 @@ var dataService = {
 	            deferred.resolve();
 	        }
     	});
-		console.log("create template!");
     	return deferred.promise;
 	},
 
