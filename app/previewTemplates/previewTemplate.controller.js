@@ -8,17 +8,13 @@
     function Controller(ReportTemplateService, FlashService) {
         var vm = this;
         vm.templates = null;
-        //vm.updateUser = updateUser;
-        vm.buttonDisabled = false;
-
-        // vm.deleteUser = deleteUser;
-
         initController();
 
         function initController() {
             // get current user
             ReportTemplateService.GetAllTemplates.then(function (templates) {
                 vm.templates = templates;
+                console.log("templates" + vm.templates);
             });
         }
 
