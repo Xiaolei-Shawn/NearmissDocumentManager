@@ -21,12 +21,12 @@ module.exports = service;
 function authenticate(email, password) {
     var deferred = Q.defer();
 
-    usersDb.findOne({ email: email }, function (err, user) {
+    usersDb.findOne({email: email}, function (err, user) {
         if (err) deferred.reject(err);
 
         if (user && bcrypt.compareSync(password, user.hash)) {
             // authentication successful
-            deferred.resolve(jwt.sign({ sub: user._id }, config.secret));
+            deferred.resolve(jwt.sign({sub: user._id}, config.secret));
         } else {
             // authentication failed
             deferred.resolve();
@@ -59,13 +59,26 @@ function create(userParam) {
 
     // email validation
     usersDb.findOne(
-        { email: userParam.email},
+        {email: userParam.email},
         function (err, user) {
             if (err) deferred.reject(err);
             if (user) {
                 // email already exists
-                deferred.reject('Email "'  + userParam.email + ' " is already registered');} 
+                deferred.reject('Email "' + userParam.email + ' " is already registered');
+            } else {
+                createUser();
+            }
+        });
 
+    // phone validation
+    usersDb.findOne(
+        {phone: userParam.phone},
+        function (err, user) {
+            if (err) deferred.reject(err);
+            if (user) {
+                // phone already exists
+                deferred.reject('Phone number "' + userParam.phone + ' " is already registered');
+            }
             else {
                 createUser();
             }
@@ -74,23 +87,22 @@ function create(userParam) {
     function createUser() {
         // set user object to userParam without the cleartext password
         var user = _.omit(userParam, 'password');
-        
-        if(userParam.firstName == "" || userParam.lastName == "" || userParam.phoneNumber == "" ){
-             deferred.reject("");
-        }
-        
-        else{
-             // add hashed password to user object
-        user.hash = bcrypt.hashSync(userParam.password, 10);
-        usersDb.insert(
-            user,
-            function (err, doc) {
-                if (err) deferred.reject(err);
 
-                deferred.resolve();
-            }); 
+        if (userParam.firstName == "" || userParam.lastName == "" || userParam.phoneNumber == "") {
+            deferred.reject("");
         }
-      
+
+        else {
+            // add hashed password to user object
+            user.hash = bcrypt.hashSync(userParam.password, 10);
+            usersDb.insert(
+                user,
+                function (err, doc) {
+                    if (err) deferred.reject(err);
+
+                    deferred.resolve();
+                });
+        }
     }
 
     return deferred.promise;
@@ -106,7 +118,7 @@ function update(_id, userParam) {
         if (user.email !== userParam.email) {
             // email has changed so check if the new email is already taken
             usersDb.findOne(
-                { email: userParam.email },
+                {email: userParam.email},
                 function (err, user) {
                     if (err) deferred.reject(err);
 
@@ -125,10 +137,10 @@ function update(_id, userParam) {
     function updateUser() {
         // fields to update
         var set = {
-            firstName: userParam.firstName,
-            lastName: userParam.lastName,
+            firstname: userParam.firstname,
+            lastname: userParam.lastname,
             email: userParam.email,
-            phoneNumber: userParam.phoneNumber
+            phonenumber: userParam.phone
         };
 
         // update password if it was entered
@@ -137,8 +149,8 @@ function update(_id, userParam) {
         }
 
         usersDb.findAndModify(
-            { _id: _id },
-            { $set: set },
+            {_id: _id},
+            {$set: set},
             function (err, doc) {
                 if (err) deferred.reject(err);
 
@@ -153,7 +165,7 @@ function _delete(_id) {
     var deferred = Q.defer();
 
     usersDb.remove(
-        { _id: _id },
+        {_id: _id},
         function (err) {
             if (err) deferred.reject(err);
 
@@ -171,43 +183,43 @@ function updatePassword(_id, userParam) {
         if (err) deferred.reject(err);
 
         updateUserPassword(user);
-        
+
     });
 
     function updateUserPassword(user) {
         // fields to update
         var set = {
-            firstName: user.firstName,
+            firstName: user.firstnName,
             lastName: user.lastName,
             email: user.email,
-            phoneNumber: user.phoneNumber
+            phone: user.phone
         };
-        if(!userParam.oldPassword){
+        if (!userParam.oldPassword) {
             deferred.reject({
                 err: 'Missing old password'
-            }); 
+            });
             return deferred.promise;
         }
 
-        if(!userParam.hasOwnProperty("newPassword")){
+        if (!userParam.hasOwnProperty("newPassword")) {
             deferred.reject({
                 err: 'Missing new password'
-            }); 
+            });
             return deferred.promise;
         }
 
         // update password if it was entered
-        if(bcrypt.compareSync(userParam.oldPassword, user.hash)){
+        if (bcrypt.compareSync(userParam.oldPassword, user.hash)) {
             set.hash = bcrypt.hashSync(userParam.newPassword, 10);
         } else {
             deferred.reject({
                 err: 'Old password mis-match'
             });
         }
-            
+
         usersDb.findAndModify(
-            { _id: _id },
-            { $set: set },
+            {_id: _id},
+            {$set: set},
             function (err, doc) {
                 if (err) deferred.reject(err);
 

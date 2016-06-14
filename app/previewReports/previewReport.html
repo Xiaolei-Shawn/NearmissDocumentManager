@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
 
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Reports</h1>
+        <blockquote>
+            <p>Preview all reports and edit it</p>
+        </blockquote>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="flash-message; col-lo-8" ng-if="flash">
+    <div class="{{'alert alert-' + flash.type}}" ng-bind="flash.message"></div>
+</div>
+
+<div class="container">
+
+    <div class="alert alert-info">
+        <p>Sort Type: {{ sortType }}</p>
+        <p>Sort Reverse: {{ sortReverse }}</p>
+        <p>Search Query: {{ searchFish }}</p>
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead>
+        <tr>
+            <td>
+                Sushi Roll
+            </td>
+            <td>
+                Fish Type
+            </td>
+            <td>
+                Taste Level
+            </td>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="roll in sushi">
+            <td>{{ roll.name }}</td>
+            <td>{{ roll.fish }}</td>
+            <td>{{ roll.tastiness }}</td>
+        </tr>
+        </tbody>
+
+    </table>
+
+</div>
 </body>
 </html>

@@ -20,7 +20,7 @@ function authenticateUser(req, res) {
         .then(function (token) {
             if (token) {
                 // authentication successful
-                res.send({ token: token });
+                res.send({token: token});
             } else {
                 // authentication failed
                 res.sendStatus(401);
@@ -54,33 +54,67 @@ function createUser(req, res) {
 }
 
 function getCurrentUser(req, res) {
-    userService.getById(req.user.sub)
-        .then(function (user) {
-            if (user) {
-                res.send(user);
-            } else {
-                res.sendStatus(404);
-            }
-        })
-        .catch(function (err) {
-            res.status(400).send(err);
+    if (req.user != null && req.user != undefined) {
+        userService.getById(req.user.sub)
+            .then(function (user) {
+                if (user) {
+                    res.send(user);
+                } else {
+                    res.sendStatus(404);
+                }
+            })
+            .catch(function (err) {
+                res.status(400).send(err);
+            });
+    } else {
+        jwt.verify(req.query.access_token, config.secret, function (err, decoded) {
+            userService.getById(decoded.user._id)
+                .then(function (user) {
+                    if (user) {
+                        res.send(user);
+                    } else {
+                        res.sendStatus(404);
+                    }
+                })
+                .catch(function (err) {
+                    res.status(400).send(err);
+                });
         });
+    }
 }
 
 function updateUser(req, res) {
-    var userId = req.user.sub;
-    if (req.params._id !== userId) {
-        // can only update own profile
-        return res.status(401).send('You can only update your own profile');
-    }
+    if (req.user != null && req.user != undefined ) {
+        if (req.params._id !== req.user.sub) {
+            // can only update own profile
+            return res.status(401).send('You can only update your own profile');
+        }
 
-    userService.update(userId, req.body)
-        .then(function () {
-            res.sendStatus(200);
-        })
-        .catch(function (err) {
-            res.status(400).send(err);
+        userService.update(req.user.sub, req.body)
+            .then(function () {
+                res.sendStatus(200);
+            })
+            .catch(function (err) {
+                res.status(400).send(err);
+            });
+    } else {
+        jwt.verify(req.body.access_token, config.secret, function (err, decoded) {
+            var userId = decoded.user._id;
+
+            if (req.params._id !== userId) {
+                // can only update own profile
+                return res.status(401).send('You can only update your own profile');
+            }
+
+            userService.update(userId, req.body)
+                .then(function () {
+                    res.sendStatus(200);
+                })
+                .catch(function (err) {
+                    res.status(400).send(err);
+                });
         });
+    }
 }
 
 function deleteUser(req, res) {
@@ -96,20 +130,20 @@ function deleteUser(req, res) {
         })
         .catch(function (err) {
             res.status(400).send(err);
-    });
+        });
 }
 
-function updatePassword(req, res){
+function updatePassword(req, res) {
     var userid = req.params._id;
     userService.updatePassword(userid, req.body)
-        .then(function() {
+        .then(function () {
             res.sendStatus(200)
-            .send({
-                "status": 200,
-                "message": "Update password successfullly."
-            });
+                .send({
+                    "status": 200,
+                    "message": "Update password successfullly."
+                });
         })
-        .catch(function(err) {
+        .catch(function (err) {
             res.status(400)
                 .send(err);
         })

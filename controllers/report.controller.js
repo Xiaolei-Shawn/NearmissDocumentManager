@@ -5,13 +5,15 @@ var report = require('services/report.service');
 var auth = require('services/auth.service');
 
 //Mobile user requests for token 
-router.post('/mlogin', auth.login);
+//router.post('/mlogin', auth.login);
 
 //Common api
 
 router.post('/report/', report.create);
 
 router.get('/reports/', report.getAll);
+
+router.get('/reports/:key/:value', report.getSome);
 
 router.get('/report/:id', report.getOne);
 

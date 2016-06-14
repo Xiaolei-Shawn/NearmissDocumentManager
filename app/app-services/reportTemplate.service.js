@@ -12,6 +12,7 @@
         service.CreateNewReport = CreateNewReport;
        // service.GetOneTemplate = GetOneTemplate;
         service.GetAllTemplates = GetAllTemplates;
+        service.GetAllReports = GetAllReports;
 
      //  service.Delete = Delete;
 
@@ -27,7 +28,9 @@
         function GetAllTemplates(templates){
             return $http.get('/api/resources/templates/', templates).then(handleSuccess,handleError);
         }
-
+        function GetAllReports(reports){
+            return $http.get('/api/resources/reports', reports).then(handleSuccess,handleError);
+        }
 
 
         // private functions

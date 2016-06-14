@@ -8,7 +8,7 @@ router.get('/', function (req, res) {
     delete req.session.token;
 
     // move success message into local variable so it only appears once (single read)
-    var viewData = { success: req.session.success };
+    var viewData = {success: req.session.success};
     delete req.session.success;
 
     res.render('login', viewData);
@@ -22,15 +22,13 @@ router.post('/', function (req, res) {
         json: true
     }, function (error, response, body) {
         if (error) {
-            return res.render('login', { error: 'An error occurred' });
+            return res.render('login', {error: 'An error occurred'});
         }
-
-        if(req.body.email == ""){
-            return res.render('login', { error: 'Please entry your email!'});
+        if (req.body.email == "") {
+            return res.render('login', {error: 'Please entry your email!'});
         }
-
         if (!body.token) {
-            return res.render('login', { error: 'Email or password is incorrect', email: req.body.email });
+            return res.render('login', {error: 'Email or password is incorrect', email: req.body.email});
         }
 
         // save JWT token in the session to make it available to the angular app

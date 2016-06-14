@@ -1,3 +1,7 @@
-/**
- * Created by trainee on 14.06.16.
- */
+var express = require('express');
+var router = express.Router();
+var auth = require('services/auth.service');
+
+router.post('/mlogin', auth.login);
+
+module.exports = router;

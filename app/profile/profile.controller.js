@@ -11,7 +11,7 @@
         vm.updateUser = updateUser;
         vm.buttonDisabled = false;
 
-       // vm.deleteUser = deleteUser;
+        // vm.deleteUser = deleteUser;
 
         initController();
 
@@ -34,16 +34,6 @@
                 });
         }
 
-/*        function deleteUser() {
-            UserService.Delete(vm.user._id)
-                .then(function () {
-                    // log user out
-                    $location.path ('');
-                })
-                .catch(function (error) {
-                    FlashService.Error(error);
-                });
-        }*/
 
     }
 

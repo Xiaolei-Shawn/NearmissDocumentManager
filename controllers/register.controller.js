@@ -13,36 +13,36 @@ router.post('/', function (req, res) {
     request.post({
         url: config.apiUrl + '/users/register',
         form: {
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            firstname: req.body.firstName,
+            lastname: req.body.lastName,
             email: req.body.email,
             password: req.body.password,
-            phoneNumber: req.body.phoneNumber,
+            phone: req.body.phoneNumber,
             role: 'administrator'
         },
 
         json: true,
 
     }, function (error, response, body) {
-  
+
         if (error) {
-            return res.render('register', { error: 'An error occurred' });
+            return res.render('register', {error: 'An error occurred'});
         }
 
         if (req.body.firstName == "") {
-            return res.render('register', { error: 'Please entry a first name!'});
+            return res.render('register', {error: 'Please enter a first name!'});
         }
         if (req.body.lastName == "") {
-            return res.render('register', { error: 'Please entry a last name!'});
+            return res.render('register', {error: 'Please enter a last name!'});
         }
         if (req.body.phoneNumber == "") {
-            return res.render('register', { error: 'Please entry a phone number!'});
+            return res.render('register', {error: 'Please enter a phone number!'});
         }
         if (response.statusCode !== 200) {
             return res.render('register', {
                 error: response.body,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
+                firstname: req.body.firstName,
+                lastname: req.body.lastName,
                 email: req.body.email
             });
 

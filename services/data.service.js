@@ -11,249 +11,269 @@ var bcrypt = require('bcryptjs');
 var Q = require('q');
 
 var dataService = {
-	getOneTemplate: function(_id){
-		var deferred = Q.defer();
+    getOneTemplate: function (_id) {
+        var deferred = Q.defer();
 
-    	templateCollection.findOne({_id: _id}, function (err, template) {
-	        if (err) deferred.reject(err);
+        templateCollection.findOne({_id: _id}, function (err, template) {
+            if (err) deferred.reject(err);
 
-	        if (template) {
-	            deferred.resolve(_.omit(template, '_hash'));
-	        } else {
-	            // template not found
-	            deferred.resolve();
-	        }
-    	});
+            if (template) {
+                deferred.resolve(_.omit(template, '_hash'));
+            } else {
+                // template not found
+                deferred.resolve();
+            }
+        });
 
-    	return deferred.promise;
-	},
+        return deferred.promise;
+    },
 
-	getOneReport: function(_id){
-		var deferred = Q.defer();
-    	reportCollection.findOne({_id: _id}, function (err, report) {
-	        if (err) deferred.reject(err);
-	        if (report) {
-	            deferred.resolve(_.omit(report, 'hash'));
-	        } else {
-	            // report not found
-	            deferred.resolve();
-	        }
-    	});
+    getOneReport: function (_id) {
+        var deferred = Q.defer();
 
-    	return deferred.promise;
-	},
-	getAllTemplates: function(){
-		var deferred = Q.defer();
+        reportCollection.findOne({_id: _id}, function (err, report) {
+            if (err) deferred.reject(err);
+            if (report) {
+                deferred.resolve(_.omit(report, 'hash'));
+            } else {
+                // report not found
+                deferred.resolve();
+            }
+        });
 
-    	templateCollection.find({}, function (err, templates) {
-	        if (err) deferred.reject(err);
+        return deferred.promise;
+    },
+    getAllTemplates: function () {
+        var deferred = Q.defer();
 
-	        if (templates) {
-	            deferred.resolve(templates);
-	        } else {
-	            // template not found
-	            deferred.resolve();
-	        }
-    	});
+        templateCollection.find({}, function (err, templates) {
+            if (err) deferred.reject(err);
 
-    	return deferred.promise;
-	},
+            if (templates) {
+                deferred.resolve(templates);
+            } else {
+                // template not found
+                deferred.resolve();
+            }
+        });
 
-	getAllReports: function(){
-		var deferred = Q.defer();
+        return deferred.promise;
+    },
 
-    	reportCollection.find({}, function (err, reports) {
-	        if (err) deferred.reject(err);
+    getAllReports: function () {
+        var deferred = Q.defer();
 
-	        if (reports) {
-	            deferred.resolve(reports);
-	        } else {
-	            // report not found
-	            deferred.resolve();
-	        }
-    	});
+        reportCollection.find({}, function (err, reports) {
+            if (err) deferred.reject(err);
 
-    	return deferred.promise;
-	},
+            if (reports) {
+                deferred.resolve(reports);
+            } else {
+                // report not found
+                deferred.resolve();
+            }
+        });
 
-	createReport : function(report){
-		var deferred = Q.defer();
+        return deferred.promise;
+    },
 
-    	reportCollection.insert(report, function (err, report) {
-	        if (err) deferred.reject(err);
+    getSomeReports: function (key, value) {
+        var deferred = Q.defer();
+        var query = {};
+        query[key] = value;
+        reportCollection.find(query, function (err, reports) {
+            if (err) deferred.reject(err);
 
-	        if (report) {
-	            deferred.resolve(report);
-	        } else {
-	            // report insert failed
-	            deferred.resolve();
-	        }
-    	});
-    	return deferred.promise;
-	},
+            if (reports) {
+                deferred.resolve(reports);
+            } else {
+                // report not found
+                deferred.resolve();
+            }
+        });
 
-	createTemplate: function(template) {
-		var deferred = Q.defer();
+        return deferred.promise;
+    },
 
-    	templateCollection.insert(template, function (err, template) {
-	        if (err) deferred.reject(err);
+    createReport: function (report) {
+        var deferred = Q.defer();
 
-	        if (template) {
-	            deferred.resolve(template);
-	        } else {
-	            // template insert failed
-	            deferred.resolve();
-	        }
-    	});
+        reportCollection.insert(report, function (err, report) {
+            if (err) deferred.reject(err);
 
-    	return deferred.promise;
-	},
-	 
-	updateTemplate: function(template, _id) {
-	    var deferred = Q.defer();
-	    templateCollection.findById({_id: _id}, function (err, targetTemplate) {
-	        if (err) deferred.reject(err);
+            if (report) {
+                deferred.resolve(report);
+            } else {
+                // report insert failed
+                deferred.resolve();
+            }
+        });
+        return deferred.promise;
+    },
 
-	        if (targetTemplate) {
-	            templateCollection.findAndModify(
-	            	{ _id : targetTemplate._id }, 
-	            	{ $set : template }, 
-	            	function (updateErr, updatedTemplate) {
-			        if (err) deferred.reject(updateErr);
+    createTemplate: function (template) {
+        var deferred = Q.defer();
 
-			        if (updatedTemplate) {
-			            deferred.resolve(updatedTemplate);
-			        } else {
-			            deferred.resolve();
-			        }
-		    	});
-	        } else {
-	            // template not found
-	            deferred.resolve();
-	        }
-    	});
-    	
+        templateCollection.insert(template, function (err, template) {
+            if (err) deferred.reject(err);
 
-    	return deferred.promise;
-	},
-	 
-	deleteTemplate: function(_id) {
-	    var deferred = Q.defer();
+            if (template) {
+                deferred.resolve(template);
+            } else {
+                // template insert failed
+                deferred.resolve();
+            }
+        });
 
-    	templateCollection.remove({_id: _id}, function (err) {
-	        if (err) deferred.reject(err);
+        return deferred.promise;
+    },
 
-	        deferred.resolve(true);
-    	});
+    updateTemplate: function (template, _id) {
+        var deferred = Q.defer();
 
-    	return deferred.promise;
-	},
+        templateCollection.findById({_id: _id}, function (err, targetTemplate) {
+            if (err) deferred.reject(err);
 
-	updateReport: function(targetReport, _id) {
-	    var deferred = Q.defer();
-	    reporteCollection.findById({_id: _id}, function (err, targetReport) {
-	        if (err) deferred.reject(err);
+            if (targetTemplate) {
+                templateCollection.findAndModify(
+                    {_id: targetTemplate._id},
+                    {$set: template},
+                    function (updateErr, updatedTemplate) {
+                        if (err) deferred.reject(updateErr);
 
-	        if (targetReport) {
-	            targetReportCollection.findAndModify(
-	            	{ _id : targetReport._id }, 
-	            	{ $set : targetReport }, 
-	            	function (updateErr, targetReport) {
-			        if (err) deferred.reject(updateErr);
+                        if (updatedTemplate) {
+                            deferred.resolve(updatedTemplate);
+                        } else {
+                            deferred.resolve();
+                        }
+                    });
+            } else {
+                // template not found
+                deferred.resolve();
+            }
+        });
 
-			        if (targetReport) {
-			            deferred.resolve(targetReport);
-			        } else {
-			            deferred.resolve();
-			        }
-		    	});
-	        } else {
-	            // template not found
-	            deferred.resolve();
-	        }
-    	});
-    	
 
-    	return deferred.promise;
-	},
-	 
-	deleteReport: function(_id) {
-	    var deferred = Q.defer();
+        return deferred.promise;
+    },
 
-    	targetReportCollection.remove({_id: _id}, function (err) {
-	        if (err) deferred.reject(err);
+    deleteTemplate: function (_id) {
+        var deferred = Q.defer();
 
-	        deferred.resolve(true);
-    	});
+        templateCollection.remove({_id: _id}, function (err) {
+            if (err) deferred.reject(err);
 
-    	return deferred.promise;
-	},
+            deferred.resolve(true);
+        });
 
-	findUser: function(email, telephone){
-		var deferred = Q.defer();
+        return deferred.promise;
+    },
 
-		if(telephone){
-			userCollection.findOne({telephoneNumber: telephone}, function (err, user) {
-		        if (err) deferred.reject(err);
+    updateReport: function (targetReport, _id) {
+        var deferred = Q.defer();
 
-		        if (user) {
-		            deferred.resolve(_.omit(user, 'hash'));
-		        } else {
-		            deferred.resolve();
-		        }
-		     })  
-		} else if(email){
-			userCollection.findOne({email: email}, function (err, user) {
-		        if (err) deferred.reject(err);
+        reportCollection.findById({_id: _id}, function (err, targetReport) {
+            if (err) deferred.reject(err);
 
-		        if (user) {
-		            deferred.resolve(_.omit(user, 'hash'));
-		        } else {
-		            deferred.resolve();
-		        }
-		    })
-		}
-		return deferred.promise;
-		//For testing
-		/*var dbUserObj = {  
-	      name: 'arvind',
-	      role: 'admin',
-	      username: 'arvind@myapp.com'
-	    };
-	 
-	    return dbUserObj;*/
-	},
-	validateUser: function(email, telephone, password){
-		if(password){
-			var deferred = Q.defer();
+            if (targetReport) {
+                reportCollection.findAndModify(
+                    {_id: targetReport._id},
+                    {$set: targetReport},
+                    function (updateErr, targetReport) {
+                        if (err) deferred.reject(updateErr);
 
-			if(telephone){
-				userCollection.findOne({phoneNumber: telephone}, function (err, user) {
-			        if (err) deferred.reject(err);
+                        if (targetReport) {
+                            deferred.resolve(targetReport);
+                        } else {
+                            deferred.resolve();
+                        }
+                    });
+            } else {
+                // template not found
+                deferred.resolve();
+            }
+        });
 
-			        if (user && bcrypt.compareSync(password, user.hash)) {
-			            deferred.resolve(user);
-			        } else {
-			            deferred.resolve();
-			        }
-			    })
-			} else if(email){
-				userCollection.findOne({email: email}, function (err, user) {
-			        if (err) deferred.reject(err);
 
-			        if (user && bcrypt.compareSync(password, user.hash)) {
-			            deferred.resolve(user);
-			        } else {
-			            deferred.resolve();
-			        }
-			    })
-			}
-			
-		} else {
-			deferred.resolve();
-		}
-		return deferred.promise;
-	}
-}
+        return deferred.promise;
+    },
+
+    deleteReport: function (_id) {
+        var deferred = Q.defer();
+
+        reportCollection.remove({_id: _id}, function (err) {
+            if (err) deferred.reject(err);
+
+            deferred.resolve(true);
+        });
+
+        return deferred.promise;
+    },
+
+    findUser: function (email, telephone) {
+        var deferred = Q.defer();
+
+        if (telephone) {
+            userCollection.findOne({phone: telephone}, function (err, user) {
+                if (err) deferred.reject(err);
+
+                if (user) {
+                    deferred.resolve(_.omit(user, 'hash'));
+                } else {
+                    deferred.resolve();
+                }
+            })
+        } else if (email) {
+            userCollection.findOne({email: email}, function (err, user) {
+                if (err) deferred.reject(err);
+
+                if (user) {
+                    deferred.resolve(_.omit(user, 'hash'));
+                } else {
+                    deferred.resolve();
+                }
+            })
+        }
+        return deferred.promise;
+        //For testing
+        /*var dbUserObj = {
+         name: 'arvind',
+         role: 'admin',
+         username: 'arvind@myapp.com'
+         };
+
+         return dbUserObj;*/
+    },
+    validateUser: function (email, telephone, password) {
+        if (password) {
+            var deferred = Q.defer();
+
+            if (telephone) {
+                userCollection.findOne({phone: telephone}, function (err, user) {
+                    if (err) deferred.reject(err);
+
+                    if (user && bcrypt.compareSync(password, user.hash)) {
+                        deferred.resolve(user);
+                    } else {
+                        deferred.resolve();
+                    }
+                })
+            } else if (email) {
+                userCollection.findOne({email: email}, function (err, user) {
+                    if (err) deferred.reject(err);
+
+                    if (user && bcrypt.compareSync(password, user.hash)) {
+                        deferred.resolve(user);
+                    } else {
+                        deferred.resolve();
+                    }
+                })
+            }
+        } else {
+            deferred.resolve();
+        }
+        return deferred.promise;
+    }
+};
 
 module.exports = dataService;
